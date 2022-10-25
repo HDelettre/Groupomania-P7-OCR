@@ -1,0 +1,34 @@
+/* Couleurs */
+$color_primary: #FD2D01;
+$color_secondary: #FFD7D7;
+$color_tertiary: #4E5166;
+
+$color_primary_light: lighten($color_primary, 20%);
+$color_secondary_dark: darken($color_secondary, 10%);
+$color_secondary_light: lighten($color_secondary, 5%);
+
+$color_white: white;
+$color_black: black;
+
+/* Margin - Padding */
+$margin_small: 5px;
+$margin_medium: 10px;
+$margin_large: 20px;
+$margin_xlarge:30px;
+
+/* Font size */
+$font_small: 10px;
+$font_standard: 14px;
+$font_medium:17px;
+$font_large: 20px;
+
+/* Icon size */
+$icon_small: 14px;
+$icon_medium: 18px;
+$icon_font: 25px;
+
+/* Border Radius */
+$radius_small: 5px;
+$radius_medium: 10px;
+$radius_large: 15px;
+$radius_xlarge: 20px;

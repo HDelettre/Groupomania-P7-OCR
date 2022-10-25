@@ -1,0 +1,16 @@
+body {
+  max-width: 1200px;
+  margin: auto;
+  background-color: $color_secondary_light;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $margin_medium;
+  background-color: $color_white;
+  color: $color_tertiary;
+
+  font-family: 'Roboto', sans-serif;
+}

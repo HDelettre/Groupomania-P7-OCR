@@ -1,0 +1,73 @@
+.login {
+  margin-top: $margin_xlarge;
+  width: 80%;
+  min-height: 280px;
+  display: flex;
+  justify-content: center;
+  
+  
+  border:1 px solid $color_primary;
+  
+  &_setup{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    &--btn {
+      padding: $margin_medium;
+      background-color: $color_primary_light;
+      color: $color_white;
+      margin: $margin_large;
+      min-width: 120px;
+      text-align: center;
+      border-radius: $margin_small;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color_primary;
+      }
+    }
+  }
+
+  &_form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    label {
+      font-size: $font_medium;
+    }
+    
+    &--input {
+      padding: $margin_small;
+      min-width: 180px;
+      margin: $margin_medium;
+    
+    }
+    &--submit {
+      padding: $margin_medium;
+      background-color: $color_primary_light;
+      color: $color_white;
+      margin-left: 45px;
+      margin-top: $margin_medium;
+      margin-bottom: $margin_large;
+      min-width: 120px;
+      text-align: center;
+      border-radius: $margin_small;
+      cursor: pointer;
+      border: none;
+
+      &:hover {
+        background-color: $color_primary;
+      }
+    }
+  }
+}
+
+.select {
+  background-color: $color_primary;
+}

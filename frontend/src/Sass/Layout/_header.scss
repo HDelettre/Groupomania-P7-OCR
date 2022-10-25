@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+  border: 1px solid $color_primary;
+
+  &_logo {
+    width: 25%;
+
+    img {
+      max-width: 90%;
+    }
+  }
+
+
+  &_title {
+    width: 75%;
+    text-align: center;
+  }
+
+}
