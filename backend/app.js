@@ -7,10 +7,10 @@ require('dotenv').config({
 })
 
 /* chemin vers le dossier image */
-const path = require('path');
+//const path = require('path');
 
 /* Déclaration des routes */
-const routesPost = require('./routes/post_routes');
+const routesMessages = require('./routes/message_routes');
 const routesUsers = require('./routes/users_routes');
 
 // connection mongodb
@@ -20,7 +20,7 @@ require('./config/mongodb');
 const app = express();
 
 // Gestion des images
-app.use('/images', express.static(__dirname + '/images'));
+app.use('/pictures', express.static(__dirname + '/pictures'));
 
 /* CORS */
 app.use((req, res, next) => {
@@ -35,7 +35,7 @@ app.use(express.json());
 
 /* Appel des routes */
 app.use( '/api/auth', routesUsers );
-app.use( '/api/post', routesPost );
+app.use( '/api/post', routesMessages );
 
 /* exportation application vers le serveur */
 module.exports = app;
