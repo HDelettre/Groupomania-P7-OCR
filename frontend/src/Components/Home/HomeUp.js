@@ -1,10 +1,14 @@
 import React from 'react';
+import HomeProfile from './HomeProfile';
+import NewMessage from './NewMessage';
 
 const HomeUp = () => {
     return (
-        <div>
-            bloc profile resume and newpost
-        </div>
+        <>
+            <HomeProfile />
+
+            <NewMessage />
+        </>
     );
 }
 

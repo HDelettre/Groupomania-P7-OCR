@@ -1,0 +1,21 @@
+.logout {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: $margin_xlarge 0;
+
+  &_goodbye {
+    border-bottom: 2px solid $color_primary;
+    font-size: $font_large;
+    margin-bottom: $margin_large;
+  }
+
+  &_btn {
+    background-color: $color_primary;
+    color: $color_white;
+    padding: $margin_medium;
+    border-radius: $radius_small;
+    cursor: pointer;
+  }
+}

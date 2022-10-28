@@ -1,15 +1,24 @@
 import React from 'react';
 
+// Import components
+import Header from '../Header/Header'
 import HomeUp from './HomeUp';
-import PostContainer from './PostContainer';
+import PostCard from './PostCard';
 
 const Home = () => {
   return (
-    <div className='homecontainer'>
-      <HomeUp />
+    <>
+      <Header />
 
-      <PostContainer />
-    </div>
+      <div className='homecontainer'>
+        <HomeUp />
+      </div>
+
+      <div className='postcontainer'>
+        <h2>Les derniers messages</h2>
+        <PostCard />
+      </div>
+    </>
   );
 }
 

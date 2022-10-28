@@ -13,4 +13,36 @@ body {
   color: $color_tertiary;
 
   font-family: 'Roboto', sans-serif;
+  font-size: $font_standard;
+
+  h1 {
+    font-size: $font_large;
+    font-weight: 800;
+  }
+
+  h2{
+    font-size: $font_medium;
+    font-weight: 600;
+  }
+}
+
+.icon {
+  color: $color_primary;
+  font-size: $icon_medium;
+  cursor: pointer;
+}
+
+.separation {
+  &_vertical {
+    background-color: $color_primary;
+    height: 150px;
+    width: 3px;
+  }
+
+  &_horizontal {
+    background-color: $color_primary;
+    width: 80%;
+    height: 3px;
+    margin: $margin_medium 0;
+  }
 }
