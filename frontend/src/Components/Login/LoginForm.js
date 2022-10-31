@@ -1,20 +1,89 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
-    // Variables init 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+const LoginForm = ({ setLoginOption, loginOption, setConnectId, setErrorMsg }) => {
+  // Variables init
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-    // Events
-  const emailChange = () => {};
+  const navigate = useNavigate();
 
-  const passwordChange = () => {};
+  // Events
+  const emailChange = (e) => {
+    setEmail(e.target.value)
+    setErrorMsg('')
+  };
+
+  const passwordChange = (e) => {
+    setPassword(e.target.value)
+    setErrorMsg('')
+  };
+
+  const validHandle = () => {
+    console.log('loginOption', loginOption)
+    //
+    // Signup logic
+    //
+    if (!loginOption) {
+      const newUser = {
+        "email": email,
+        "password": password,
+        "firstName": firstName,
+        "lastName": lastName
+      }
+      console.log(newUser)
+      async function fetchNewUser() {
+        try {
+        const reponse = await fetch(`${process.env.REACT_APP_API_USER}/signup`, {
+          method: 'POST',
+          body: JSON.stringify(newUser),
+          headers: { 'Content-Type' : "application/json"}
+        }
+        )
+        console.log('reponse: ', reponse.ok)
+        if (!reponse.ok) {
+          setErrorMsg(true)
+        } else {
+          setLoginOption(true)
+        }
+} catch (error) {console.log('Fetch new user error: ', error)}
+      }
+      fetchNewUser();
+
+    } else {
+      //
+      // Login logic
+      //
+      async function fetchLoginUser() {
+        const userData = {
+          "email": email,
+        "password": password
+        }
+        const reponse = await fetch(`${process.env.REACT_APP_API_USER}/login`, {
+          method: 'POST',
+          body: JSON.stringify(userData),
+          headers: { 'Content-Type' : "application/json"}
+        })
+        if (!reponse.ok) {
+          setErrorMsg(true)
+        } else {
+          const reponseJSON = await reponse.json()
+          console.log('reponseJSON: ', reponseJSON)
+          setConnectId(reponseJSON)
+          navigate('/Home')
+        }
+      }
+      fetchLoginUser();
+          }
+
+
+  }
 
   return (
     <div className="login_form">
-      <form action="" name="login">
+      <form action="" name="login" onSubmit={validHandle}>
         <label htmlFor="email">Email:</label>
         <br />
         <input
@@ -27,7 +96,7 @@ const LoginForm = () => {
           placeholder="xxxxxx.yyyyy@mail.com"
           className="login_form--input"
         />
-        <br/>
+        <br />
 
         <label htmlFor="password">Mot de passe:</label>
         <br />
@@ -41,34 +110,46 @@ const LoginForm = () => {
           placeholder="8 caractères minimum"
           className="login_form--input"
         />
-        <br/>
-
-        <label htmlFor="firsname">Prénom:</label>
         <br />
-        <input
-          type="text"
-          name="firstname"
-          id="firstname"
-          onChange={ (event) => setFirstName(event.target.value) }
-          value={firstName}
-          required
-          className="login_form--input"
-        />
-        <br/>
 
-        <label htmlFor="lastname">Nom:</label>
-        <br />
-        <input
-          type="text"
-          name="lastname"
-          id="lastname"
-          onChange={ (event) => setLastName(event.target.value) }
-          value={lastName}
-          required
-          className="login_form--input"
-        /><br/>
+        {!loginOption ? (
+          <>
+            <label htmlFor="firsname">Prénom:</label>
+            <br />
+            <input
+              type="text"
+              name="firstname"
+              id="firstname"
+              onChange={(event) => setFirstName(event.target.value)}
+              value={firstName}
+              required
+              className="login_form--input"
+            />
+            <br />
+          </>
+        ) : (
+          ""
+        )}
 
-        <input type = "submit" value = "VALIDER" className = "login_form--submit" />
+        {!loginOption ? (
+          <>
+            <label htmlFor="lastname">Nom:</label>
+            <br />
+            <input
+              type="text"
+              name="lastname"
+              id="lastname"
+              onChange={(event) => setLastName(event.target.value)}
+              value={lastName}
+              required
+              className="login_form--input"
+            />
+            <br />
+          </>
+        ) : (
+          ""
+        )}
+        <div className="login_form--submit" onClick={validHandle}>VALIDER</div>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 /* Chargement package express */
 const express = require( "express" );
 
-const auth = require( "../config/auth" );
+const auth = require( "../config/jwt" );
 
 /* chargement package multer */
 const multer = require( "../config/multer" );
@@ -10,15 +10,14 @@ const multer = require( "../config/multer" );
 const router = express.Router();
 
 /* Chemin vers controlers */
-const postCtrl = require( "../controllers/post_controllers" );
+const postCtrl = require( "../controllers/message_controllers" );
 
 /* Controllers post */
-router.get( "/", auth, postCtrl.getAllPosts );
-router.get( "/:id", auth, postCtrl.getOnePost );
-router.post( "/newPost", auth, multer, postCtrl.newPost );
-router.put( "/:id",  auth, postCtrl.updatePost );
-router.delete( "/:id", auth, postCtrl.deletePost );
-router.patch( "/like", auth, postCtrl.likePost );
+router.get( "/", auth, postCtrl.getAllMessages );
+router.post( "/newPost", auth, multer, postCtrl.createMessage );
+router.put( "/:id",  auth, postCtrl.updateMessage );
+router.delete( "/:id", auth, postCtrl.deleteMessage );
+router.patch( "/like", auth, postCtrl.likeMessage );
 
 /* exportation router */
 module.exports = router;

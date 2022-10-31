@@ -25,4 +25,4 @@ const postSchema = mongoose.Schema(
 );
 
 /*exportation du model vers le serveur */
-module.exports = mongoose.model('PostModel', postSchema);
+module.exports = mongoose.model('MessageModel', postSchema);

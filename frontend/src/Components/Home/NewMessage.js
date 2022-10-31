@@ -7,8 +7,7 @@ const NewMessage = () => {
     <>
     <div className='homecontainer_newmessage'>
       <h2>Envoyer un nouveau message ...</h2>
-      <textarea className='homecontainer_newmessage--text' >
-        ici, on tape le texte ...
+      <textarea className='homecontainer_newmessage--text' defaultValue='Votre message ...'>
       </textarea>
 
       <div className='homecontainer_newmessage--picture'>

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 
 // Import components
 import LoginSheet from "./Components/Login/LoginSheet";
@@ -8,12 +9,15 @@ import LogoutSheet from './Components/Logout/LogoutSheet';
 
 
 function App() {
+
+  const [connectId, setConnectId] = useState('')
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element= { <LoginSheet /> } />
+        <Route path='/' element= { <LoginSheet setConnectId={setConnectId} /> } />
 
-        <Route path='/Home' element= { <Home /> } />
+        <Route path='/Home' element= { <Home connectId={connectId} /> } />
 
         <Route path='/Profile' element= { <MyProfile /> } />
 

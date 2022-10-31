@@ -172,6 +172,13 @@ body {
 .login_form--submit:hover {
   background-color: #FD2D01;
 }
+.login_error {
+  color: red;
+  font-size: 20px;
+  font-weight: 600;
+  border: 2px solid red;
+  padding: 5px;
+}
 
 .select {
   background-color: #FD2D01;

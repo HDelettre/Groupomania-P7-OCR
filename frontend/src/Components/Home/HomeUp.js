@@ -1,11 +1,13 @@
 import React from 'react';
+
+// Import components
 import HomeProfile from './HomeProfile';
 import NewMessage from './NewMessage';
 
-const HomeUp = () => {
+const HomeUp = ({connectId}) => {
     return (
         <>
-            <HomeProfile />
+            <HomeProfile connectId={connectId}/>
 
             <NewMessage />
         </>

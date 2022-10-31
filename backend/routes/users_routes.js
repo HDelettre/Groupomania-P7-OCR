@@ -3,7 +3,7 @@ const express = require("express");
 
 /* chargement package multer */
 const multer = require( "../config/multer" );
-const auth = require( "../config/auth" );
+const auth = require( "../config/jwt" );
 
 /* Définition du router */
 const router = express.Router();
@@ -13,14 +13,15 @@ const authCtrl = require( "../controllers/auth_controllers" );
 const userCtrl = require( "../controllers/user_controllers" );
 
 /* Controllers authentification */
-router.post( "/signup", authCtrl.signup );
-router.post( "/login", authCtrl.login );
-router.get( "/logout/:id", auth, authCtrl.logout );
+router.post( "/signup", authCtrl.createUser );
+router.post( "/login", authCtrl.loginUser );
+router.get( "/logout/:id", auth, authCtrl.logoutUser );
 
 // Controllers Users
-router.get( "/", auth, userCtrl.getAllUser);
-router.put( "/:id", auth, multer, userCtrl.update );
-router.delete( "/:id", auth, userCtrl.delete );
+router.get("/:id", userCtrl.getOneUser);
+router.get( "/", userCtrl.getAllUsers);
+router.put( "/:id", auth, multer, userCtrl.updateUser );
+router.delete( "/:id", auth, userCtrl.deleteUser );
 router.patch( "/follow", auth, userCtrl.follow );
 
 /* exportation router */
