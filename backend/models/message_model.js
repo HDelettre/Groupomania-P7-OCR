@@ -8,11 +8,11 @@ const postSchema = mongoose.Schema(
             type: String,
             require: true
         },
-        postText: {
+        messageTxt: {
             type: String,
             maxlength: 1000
         },
-        postImage: {
+        messageImg: {
             type: String
         },
         LikeId: {

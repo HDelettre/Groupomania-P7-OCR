@@ -1,35 +1,25 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
 
 // Import components
-import Header from '../Header/Header'
-import HomeUp from './HomeUp';
-import PostCard from './PostCard';
+import Header from "../Header/Header";
+import CompilMessage from "./CompilMessage";
+import HomeUp from "./HomeUp";
 
 const Home = ({ connectId }) => {
-
-  console.log('ConnectId: ', connectId)
-
-  const dispatch = useDispatch();
-
-  /*useEffect(() => {
-    
-  }, []);*/
-
   return (
     <>
       <Header />
 
-      <div className='homecontainer'>
+      <div className="homecontainer">
         <HomeUp connectId={connectId} />
       </div>
 
-      <div className='postcontainer'>
+      <div className="postcontainer">
         <h2>Les derniers messages</h2>
-        <PostCard />
+        <CompilMessage />
       </div>
     </>
   );
-}
+};
 
 export default Home;

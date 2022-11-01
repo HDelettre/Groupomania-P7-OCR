@@ -8,7 +8,20 @@ const UserModel = require('../models/user_model');
 // Middleware GET all messages
 //
 exports.getAllMessages = (req, res) => {
-
+  /*
+  async function LoadingAllMessages() {
+    try {
+      const reponse = await MessageModel.find();
+      console.log('reponse get all messages')
+      return reponse
+    }
+    catch (error) {console.log(error)}
+  }
+  LoadingAllMessages();
+  */
+ MessageModel.find()
+ .then((allPosts) => {res.status(200).json({allPosts})})
+ .catch((error)=>res.status(500).send({error}))
 }
 
 //
@@ -19,8 +32,10 @@ exports.createMessage = (req, res) => {
     authorId: req.body.authorId,
     messageTxt: req.body.messageTxt
   })
-
-  if (req.files) {
+  console.log('req.body: ', req.body)
+  console.log('req.files: ', req.files)
+  if (req.files.file) {
+    console.log('il y a une image')
     const pictName = JSON.parse(JSON.stringify(req.files.file))[0];
     newMessage['messageImg'] = `${pictName.filename}`;
   }
@@ -28,6 +43,7 @@ exports.createMessage = (req, res) => {
   async function saveMessage() {
     try {
       const reponse = await newMessage.save()
+      console.log('reponse savemessage: ', reponse)
 
       const messageData = await JSON.parse(JSON.stringify(reponse));
 
@@ -35,8 +51,10 @@ exports.createMessage = (req, res) => {
         { _id: messageData.authorId },
         { $push: { posts: messageData._id }}
       )
+
+      return res.status(201).json({message: 'Le message a été sauvegardé'})
     }
-    catch(error) {console.log(error)}
+    catch(error) {res.status(400).send(error)}
   }
   saveMessage();
 }

@@ -47,6 +47,15 @@
       margin: $margin_large $margin_medium;
       color: $color_primary;
     }
+
+    &--input {
+      width: $icon_medium;
+      height: $icon_medium;
+      position: absolute;
+      transform: translate(9px, -60px);
+      opacity: 0;
+      cursor: pointer;
+    }
   }
 
   &_newmessage {

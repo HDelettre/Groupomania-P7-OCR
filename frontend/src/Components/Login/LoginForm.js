@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = ({ setLoginOption, loginOption, setConnectId, setErrorMsg }) => {
+const LoginForm = ({
+  setLoginOption,
+  loginOption,
+  setConnectId,
+  setErrorMsg,
+}) => {
   // Variables init
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,74 +17,74 @@ const LoginForm = ({ setLoginOption, loginOption, setConnectId, setErrorMsg }) =
 
   // Events
   const emailChange = (e) => {
-    setEmail(e.target.value)
-    setErrorMsg('')
+    setEmail(e.target.value);
+    setErrorMsg("");
   };
 
   const passwordChange = (e) => {
-    setPassword(e.target.value)
-    setErrorMsg('')
+    setPassword(e.target.value);
+    setErrorMsg("");
   };
 
   const validHandle = () => {
-    console.log('loginOption', loginOption)
+    console.log("loginOption", loginOption);
     //
     // Signup logic
     //
     if (!loginOption) {
       const newUser = {
-        "email": email,
-        "password": password,
-        "firstName": firstName,
-        "lastName": lastName
-      }
-      console.log(newUser)
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      };
+      console.log(newUser);
       async function fetchNewUser() {
         try {
-        const reponse = await fetch(`${process.env.REACT_APP_API_USER}/signup`, {
-          method: 'POST',
-          body: JSON.stringify(newUser),
-          headers: { 'Content-Type' : "application/json"}
+          const reponse = await fetch(
+            `${process.env.REACT_APP_API_USER}/signup`,
+            {
+              method: "POST",
+              body: JSON.stringify(newUser),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          console.log("reponse: ", reponse.ok);
+          if (!reponse.ok) {
+            setErrorMsg(true);
+          } else {
+            setLoginOption(true);
+          }
+        } catch (error) {
+          console.log("Fetch new user error: ", error);
         }
-        )
-        console.log('reponse: ', reponse.ok)
-        if (!reponse.ok) {
-          setErrorMsg(true)
-        } else {
-          setLoginOption(true)
-        }
-} catch (error) {console.log('Fetch new user error: ', error)}
       }
       fetchNewUser();
-
     } else {
       //
       // Login logic
       //
       async function fetchLoginUser() {
         const userData = {
-          "email": email,
-        "password": password
-        }
+          email: email,
+          password: password,
+        };
         const reponse = await fetch(`${process.env.REACT_APP_API_USER}/login`, {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(userData),
-          headers: { 'Content-Type' : "application/json"}
-        })
+          headers: { "Content-Type": "application/json" },
+        });
         if (!reponse.ok) {
-          setErrorMsg(true)
+          setErrorMsg(true);
         } else {
-          const reponseJSON = await reponse.json()
-          console.log('reponseJSON: ', reponseJSON)
-          setConnectId(reponseJSON)
-          navigate('/Home')
+          const reponseJSON = await reponse.json();
+          setConnectId(reponseJSON);
+          navigate("/Home");
         }
       }
       fetchLoginUser();
-          }
-
-
-  }
+    }
+  };
 
   return (
     <div className="login_form">
@@ -149,7 +154,9 @@ const LoginForm = ({ setLoginOption, loginOption, setConnectId, setErrorMsg }) =
         ) : (
           ""
         )}
-        <div className="login_form--submit" onClick={validHandle}>VALIDER</div>
+        <div className="login_form--submit" onClick={validHandle}>
+          VALIDER
+        </div>
       </form>
     </div>
   );

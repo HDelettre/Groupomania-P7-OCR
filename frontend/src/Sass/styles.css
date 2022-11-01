@@ -226,6 +226,14 @@ body {
   margin: 20px 10px;
   color: #FD2D01;
 }
+.homecontainer_navbarmessage--input {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  transform: translate(9px, -60px);
+  opacity: 0;
+  cursor: pointer;
+}
 .homecontainer_newmessage {
   display: flex;
   flex-direction: column;
@@ -445,4 +453,5 @@ body {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  text-decoration: none;
 }/*# sourceMappingURL=styles.css.map */

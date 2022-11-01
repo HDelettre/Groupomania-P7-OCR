@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   margin: $margin_xlarge 0;
-
+  
   &_goodbye {
     border-bottom: 2px solid $color_primary;
     font-size: $font_large;
@@ -17,5 +17,6 @@
     padding: $margin_medium;
     border-radius: $radius_small;
     cursor: pointer;
+    text-decoration: none;
   }
 }

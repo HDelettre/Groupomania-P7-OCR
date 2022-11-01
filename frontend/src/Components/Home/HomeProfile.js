@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 // Import components
 import SpinLoader from '../SpinLoader/SpinLoader';
+import ProfileIcon from '../Icons/ProfileIcon';
 
 // import Slice
 import { GET_USER } from "../../SliceReducers/slice.user";
 
 // Import Utils
 import { dateForm } from "../../Utils/dateFormat";
+import LogoutIcon from "../Icons/LogoutIcon";
 
 const HomeProfile = ({connectId}) => {
   const [dataLoading, setDataLoading] = useState(true);
@@ -52,13 +53,9 @@ const HomeProfile = ({connectId}) => {
         <p>Incrit depuis le { dateForm(user.createdAt)}</p>
 
         <div className="homecontainer_navbarprofile">
-          <Link to="/Profile">
-            <i className="fas fa-user homecontainer_navbarprofile--btn" title="Edit Profil"></i>
-          </Link>
-          <br />
-          <Link to="/Logout">
-            <i className="fas fa-sign-out-alt homecontainer_navbarprofile--btn" title="Déconnection"></i>
-          </Link>
+          <ProfileIcon />
+          
+          <LogoutIcon />
         </div>
       </div>
     </>

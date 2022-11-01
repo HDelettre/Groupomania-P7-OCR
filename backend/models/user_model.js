@@ -52,8 +52,7 @@ const userSchema = mongoose.Schema(
             type: [String]
         },
         token: {
-            type: String,
-            select: false
+            type: String
         }
     },
     {

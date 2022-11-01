@@ -35,7 +35,7 @@ app.use(express.json());
 
 /* Appel des routes */
 app.use( '/api/auth', routesUsers );
-app.use( '/api/post', routesMessages );
+app.use( '/api/message', routesMessages );
 
 /* exportation application vers le serveur */
 module.exports = app;

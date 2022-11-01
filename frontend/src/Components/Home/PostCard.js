@@ -1,11 +1,14 @@
 import React from 'react';
+
+// Import components
 import PostAuthor from './PostAuthor';
 import PostMessage from './PostMessage';
 
-const PostCard = () => {
+const PostCard = ({post}) => {
+
     return (
         <div className='postcard'>
-            <PostAuthor />
+            <PostAuthor post={post} />
             <div className='separation_vertical'></div>
             <PostMessage />
             <div className='separation_vertical'></div>

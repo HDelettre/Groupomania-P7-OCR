@@ -1,21 +1,26 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // Import components
 import Header from '../Header/Header';
 
 const LogoutSheet = () => {
+    const user = useSelector((state) => state.user.userData)
+    const fullname = `${user.firstName} ${user.lastName}`
+
     return (
         <>
         <Header />
 
         <div className='logout'>
             <div className='logout_goodbye'>
-                Au revoir ..........
+                Au revoir {fullname}
             </div>
 
-            <div className='logout_btn'>
+            <Link to='/' className='logout_btn' >
                 Retour à l'accueil
-            </div>
+            </Link>
         </div>
         </>
     );
