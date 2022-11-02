@@ -15,8 +15,11 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-height: 140px;
+  box-sizing: border-box;
   border: 2px solid $color_primary;
   border-radius: $radius_medium;
+  margin: $margin_medium;
 
   &_author {
     width: 25%;
@@ -28,14 +31,16 @@
       width: 30%;
       border: 1px solid $color_primary;
       border-radius: 50%;
+      margin-top: $margin_medium;
     }
   }
 
   &_message {
-    width: 50%;
+    width: 45%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 
     &--text {
       align-self: baseline;
@@ -43,7 +48,20 @@
       padding: $margin_small;
     }
 
+    &--edittext {
+      align-self: baseline;
+      margin-left: $margin_medium;
+      padding: $margin_small;
+      border:none;
+      width: 90%;
+      resize:none;
+      font-family: 'Roboto', sans-serif;
+      color: $color_primary;
+      background-color: $color_secondary_light;      
+    }
+
     &--picture {
+      position: relative;
       img {
         max-height: 300px;
         object-fit: cover;
@@ -52,7 +70,13 @@
     }
 
     &--navbar {
-      margin: $margin_medium 0;
+      margin:$margin_medium;
+      text-align: center;
+      width: 5%;
+      
+      i {
+        margin: $margin_small 0;
+      }
     }
   }
 

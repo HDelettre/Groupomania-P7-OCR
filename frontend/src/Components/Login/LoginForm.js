@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { GET_USER } from "../../SliceReducers/slice.user";
 
 const LoginForm = ({
   setLoginOption,
   loginOption,
   setConnectId,
+  connectId,
   setErrorMsg,
 }) => {
   // Variables init
@@ -14,6 +18,7 @@ const LoginForm = ({
   const [lastName, setLastName] = useState("");
 
   const navigate = useNavigate();
+  const dispatch=useDispatch();
 
   // Events
   const emailChange = (e) => {
@@ -79,6 +84,17 @@ const LoginForm = ({
         } else {
           const reponseJSON = await reponse.json();
           setConnectId(reponseJSON);
+
+          const user = await fetch(`${process.env.REACT_APP_API_USER}/${reponseJSON}`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" }
+          })
+  
+          const userJSON = await user.json();
+          console.log('reponse userJson: ',userJSON)
+  
+          dispatch(GET_USER(JSON.parse(JSON.stringify(userJSON.userData)))) 
+
           navigate("/Home");
         }
       }

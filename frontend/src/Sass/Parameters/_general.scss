@@ -34,13 +34,13 @@ body {
 
 .separation {
   &_vertical {
-    background-color: $color_primary;
-    height: 150px;
+    background-color: $color_secondary;
+    height: 120px;
     width: 3px;
   }
 
   &_horizontal {
-    background-color: $color_primary;
+    background-color: $color_secondary;
     width: 80%;
     height: 3px;
     margin: $margin_medium 0;

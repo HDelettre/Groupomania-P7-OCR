@@ -1,18 +1,17 @@
 import React from 'react';
 
-import image from "../../Assets/index.png";
+import FollowIcon from '../Icons/FollowIcon';
 
-const PostAuthor = () => {
-
-const followUp = () => {};
+const PostAuthor = ({post, postAuthor}) => {
 
   return (
     <div className='postcard_author'>
-      <img src={image} alt="" />
+      <img src={`${process.env.REACT_APP_API_IMG}/profile/${postAuthor.imageUrl}`} alt="profile" />
       
-      <h3>Gilles Lerouge</h3>
+      <h3>{`${postAuthor.firstName} ${postAuthor.lastName}`}</h3>
       
-      <i className="fa-solid fa-square-minus icon" title='Déabonner' onClick={followUp}></i>
+      { post.authorId === postAuthor._id ? ('') : ( <FollowIcon idToFollow={post.authorId} userId={postAuthor._id} /> ) }
+      
     </div>
   );
 }
