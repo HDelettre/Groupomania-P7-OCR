@@ -25,9 +25,12 @@ const MyProfile = () => {
   const [mimeType, setMimeType] = useState("");
   let profileFileName = "";
 
-  console.log("Mimetype: ", mimeType, ' / ', storyTxt);
+  console.log("Mimetype: ", updateProfile, ' / ', storyTxt);
 
   const validUpdateProfile = () => {
+    if (updateProfile) {
+      alert('Veuillez confirmer la modification de la présentation')
+    } else {
     const profileData = new FormData();
     profileData.append("story", storyTxt);
 
@@ -46,31 +49,23 @@ const MyProfile = () => {
           }
         );
         console.log("FetchUpdateProfile: ", reponse);
-        setUpdateProfile(true);
+        profileFileName = `${user._id}.${mimeType}`;
+        dispatch(UPDATE_USER([storyTxt, profileFileName]));        
       } catch (error) {
         console.log(error);
       }
     }
     fetchUpdateProfile();
+    }
   };
 
   useEffect(() => {
     if (user.story) {
-      setStoryTxt("Votre présentation ...");
-    } else {
       setStoryTxt(user.story);
+    } else {
+      setStoryTxt("Votre présentation ...");
     }
-  }, [storyTxt]);
-
-  useEffect(() => {
-    if (updateProfile) {
-      if (profileFile) {
-        profileFileName = `${user._id}.${mimeType}`;
-      }
-      dispatch(UPDATE_USER([user.story, profileFileName]));
-      setUpdateProfile(false);
-    }
-  }, [updateProfile]);
+  }, []);
 
   return (
     <>
@@ -88,11 +83,14 @@ const MyProfile = () => {
           </div>
 
           <div className="profile_row">
-            <ProfileStory setStoryTxt={setStoryTxt} storyTxt={storyTxt} />
+            <ProfileStory setStoryTxt={setStoryTxt} storyTxt={storyTxt} setUpdateProfile={setUpdateProfile} updateProfile={updateProfile} />
             <ProfileNavbar
               setProfilePict={setProfilePict}
               setProfileFile={setProfileFile}
               setMimeType={setMimeType}
+              setUpdateProfile={setUpdateProfile}
+              updateProfile={updateProfile}
+              storyTxt={storyTxt}
             />
           </div>
 

@@ -15,14 +15,14 @@ const PostMessage = ({ post, postAuthor, user, setDelMsg }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log('USE EFFECT POSTMESSAGE')
     if (editPost) {
       dispatch(UPDATE_MESSAGE([post._id, editMessage]));
       setEditPost(false)
     }
   }, [editPost]);
-
+*/
   return (
     <>
       <div className="postcard_message">

@@ -43,9 +43,9 @@ exports.updateUser = (req, res) => {
         { _id: req.params.id },
         { $set: { story: req.body.story }}
       )
-
-      if (req.files.file) {
-        const profilePictName = JSON.parse(JSON.stringify(req.files.file))[0];
+        console.log(req.body.story, '/ ', req.files.profile);
+      if (req.files.profile) {
+        const profilePictName = req.files.profile[0].filename
         await UserModel.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: { imageUrl: profilePictName }}

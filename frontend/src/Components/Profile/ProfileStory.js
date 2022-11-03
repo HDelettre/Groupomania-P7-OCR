@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 
-const ProfileStory = ({setStoryTxt, storyTxt}) => {
-  
-  const storyUpdate = (e) => {
+const ProfileStory = ({setStoryTxt, storyTxt, setUpdateProfile, updateProfile}) => {
+
+  const editStory = (e) => {
     setStoryTxt(e.target.value)
-  };
+  }
   
-  return (
+
+  return !updateProfile ? (
+    <div className="profile_story">
+      {storyTxt}
+    </div>
+  ) : (
     <textarea
       name="story"
       className="profile_story"
       placeholder="Votre présentation ..."
-      
-      onChange={(e) => setStoryTxt(e.target.value)}
+      onChange={editStory }
       value={storyTxt}
     ></textarea>
   );
