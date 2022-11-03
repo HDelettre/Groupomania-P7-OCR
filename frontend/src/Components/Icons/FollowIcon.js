@@ -39,9 +39,9 @@ const FollowIcon = ({idToFollow, userId}) => {
   return (
     <div className='icon'>
       { user.followings.includes(idToFollow) ? 
-      (<i className="fa-solid fa-square-minus icon" title='Déabonner' onClick={followUp}></i>)
+      (<i className="fa-solid fa-square-minus icon marginiconleft" title='Déabonner' onClick={followUp}></i>)
        :
-      (<i className="fa-solid fa-square-plus" title='Suivre' onClick={followUp}></i>)}
+      (<i className="fa-solid fa-square-plus icon marginiconleft" title='Suivre' onClick={followUp}></i>)}
       
     </div>
   );

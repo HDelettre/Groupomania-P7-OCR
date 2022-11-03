@@ -63,7 +63,7 @@
       width: $icon_medium;
       height: $icon_medium;
       position: absolute;
-      transform: translate(-68px, 0px);
+      transform: translate(-58px, 0px);
       opacity: 0;
       cursor: pointer;
     }
@@ -108,6 +108,7 @@
       padding: $margin_medium;
       border: 1px solid $color_primary;
       border-radius: $radius_medium;
+      margin: $margin_medium;
     }
   }
 
@@ -116,6 +117,21 @@
     border: 2px solid $color_primary;
     border-radius: $radius_medium;
     padding: 0 $margin_large;
+    
+    &--list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &--box {
+      display: flex;
+      align-items: center;
+      border: 1px solid $color_primary;
+      padding: $margin_medium;
+      margin: $margin_medium;
+      border-radius: $radius_medium;
+    }
   }
 }
 

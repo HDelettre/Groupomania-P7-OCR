@@ -27,7 +27,6 @@ const EditPostIcon = ({setEditPost, editPost, setEditMessage, editMessage, user,
       })
       console.log('Reponse fetchUpdateMessage: ',reponse)
 
-      setEditPost(false)
       } catch(error) {console.log(error)}
     }
     fetchUpdateMessage();

@@ -20,7 +20,7 @@ const HomeProfile = ({}) => {
           alt=""
         />
         <p>Incrit depuis le {dateForm(user.createdAt)}</p>
-
+        <div className="separation_horizontal"></div>
         <div className="homecontainer_navbarprofile">
           <ProfileIcon />
 

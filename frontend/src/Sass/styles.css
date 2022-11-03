@@ -46,6 +46,10 @@ body {
   margin: 10px 0;
 }
 
+.marginiconleft {
+  margin-left: 10px;
+}
+
 .spinloader {
   cursor: progress;
   /*position: absolute;
@@ -209,11 +213,15 @@ body {
 .homecontainer_navbarprofile {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+  width: 70%;
   font-size: 20px;
-  border-top: 1px solid #FD2D01;
+  margin-top: 5px;
+}
+.homecontainer_navbarprofile a {
+  text-decoration: none;
 }
 .homecontainer_navbarprofile--btn {
-  margin: 5px 20px;
   color: #FD2D01;
 }
 .homecontainer_navbarmessage {
@@ -420,7 +428,7 @@ body {
   width: 20px;
   height: 20px;
   position: absolute;
-  transform: translate(-68px, 0px);
+  transform: translate(-58px, 0px);
   opacity: 0;
   cursor: pointer;
 }
@@ -459,12 +467,26 @@ body {
   padding: 10px;
   border: 1px solid #FD2D01;
   border-radius: 10px;
+  margin: 10px;
 }
 .profile_suggest {
   width: 35%;
   border: 2px solid #FD2D01;
   border-radius: 10px;
   padding: 0 20px;
+}
+.profile_suggest--list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile_suggest--box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #FD2D01;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
 }
 
 .logout {

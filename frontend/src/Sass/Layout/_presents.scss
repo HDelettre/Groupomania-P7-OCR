@@ -27,12 +27,16 @@
   &_navbarprofile {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
     font-size: $icon_medium;
-    border-top: 1px solid $color_primary;
-    
+    margin-top: $margin_small;
+
+    a {
+      text-decoration: none;
+    }
 
     &--btn {
-      margin: $margin_small $margin_large;
       color: $color_primary;
     }
   }

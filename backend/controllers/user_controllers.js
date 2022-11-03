@@ -36,6 +36,7 @@ exports.updateUser = (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
   return res.status(400).json({ message: "L'utilisateur n'existe pas " });
 }
+
   async function updateUserProfile() {
     try {
       await UserModel.findByIdAndUpdate(

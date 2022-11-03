@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
       const name = file.originalname.split(' ').join('_');
       fileName = name.split('.')[0] + '_' + Date.now() + '.' + fileExtension;
     } else {
-      fileName = req.body.id + '.' + fileExtension;
+      fileName = req.params.id + '.' + fileExtension;
     }
     callback(null, fileName);
   }

@@ -20,7 +20,7 @@ const PostCard = ({post, setDelMsg}) => {
                 break
             }
         }
-    }, []);
+    }, [post]);
 
     return (
         <div className='postcard'>

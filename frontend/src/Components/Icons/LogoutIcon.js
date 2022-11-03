@@ -25,7 +25,7 @@ const LogoutIcon = () => {
 
   return (
     <div className='icon'>
-      <i className="fas fa-sign-out-alt homecontainer_navbarprofile--btn" title="Déconnection" onClick={exitUser}></i>
+      <i className="fas fa-sign-out-alt icon" title="Déconnection" onClick={exitUser}></i>
     </div>
   );
 }

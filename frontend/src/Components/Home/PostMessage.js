@@ -17,7 +17,10 @@ const PostMessage = ({ post, postAuthor, user, setDelMsg }) => {
 
   useEffect(() => {
     console.log('USE EFFECT POSTMESSAGE')
-    dispatch(UPDATE_MESSAGE([post._id, editMessage]));
+    if (editPost) {
+      dispatch(UPDATE_MESSAGE([post._id, editMessage]));
+      setEditPost(false)
+    }
   }, [editPost]);
 
   return (
