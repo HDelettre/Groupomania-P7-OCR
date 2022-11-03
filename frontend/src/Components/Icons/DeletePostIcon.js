@@ -1,11 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { DELETE_MESSAGE } from '../../SliceReducers/slice.message';
-import { DELETE_POSTREF } from '../../SliceReducers/slice.user';
 
-const DeletePostIcon = ({user, post}) => {
 
-  const dispatch = useDispatch();
+const DeletePostIcon = ({user, post, setDelMsg}) => {
+
+  
 
 const deletePost = () => {
   if (window.confirm('Veuillez confirmer la suppression du message !')) {
@@ -15,7 +13,7 @@ const deletePost = () => {
 
     async function deleteMessage() {
       try {
-        const reponse = await fetch(`${process.env.REACT_APP_API_IMG}/${post._id}`, {
+        const reponse = await fetch(`${process.env.REACT_APP_API_MSG}/${post._id}`, {
           method: 'DELETE',
           body: JSON.stringify(bodyRequest),
           headers: {
@@ -24,8 +22,7 @@ const deletePost = () => {
           }
         })
         console.log(reponse);
-        dispatch(DELETE_MESSAGE(post._id));
-        dispatch(DELETE_POSTREF(post._id))
+        setDelMsg(true)
         
       } catch (error) {console.log(error)}
     }

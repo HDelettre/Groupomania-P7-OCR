@@ -7,17 +7,18 @@ import EditPostIcon from "../Icons/EditPostIcon";
 
 // Import Slice
 import { UPDATE_MESSAGE } from "../../SliceReducers/slice.message";
+import LikePostIcon from "../Icons/LikePostIcon";
 
-const PostMessage = ({ post, postAuthor, user }) => {
+const PostMessage = ({ post, postAuthor, user, setDelMsg }) => {
   const [editPost, setEditPost] = useState(false);
   const [editMessage, setEditMessage] = useState(post.messageTxt);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('USE EFFECT')
+    console.log('USE EFFECT POSTMESSAGE')
     dispatch(UPDATE_MESSAGE([post._id, editMessage]));
-  }, [editMessage, editPost, dispatch]);
+  }, [editPost]);
 
   return (
     <>
@@ -45,7 +46,7 @@ const PostMessage = ({ post, postAuthor, user }) => {
         )}
       </div>
       <div className="postcard_message--navbar">
-        {post.authorId === postAuthor._id ? (
+        {post.authorId === user._id ? (
           <>
             <>
               <i className="fa-solid fa-heart icon" title="Like"></i>
@@ -64,10 +65,13 @@ const PostMessage = ({ post, postAuthor, user }) => {
             <DeletePostIcon
               user={user}
               post={post}
+              setDelMsg={setDelMsg}
             />
           </>
         ) : (
-          ""
+          
+          <LikePostIcon post={post} />
+          
         )}
       </div>
     </>

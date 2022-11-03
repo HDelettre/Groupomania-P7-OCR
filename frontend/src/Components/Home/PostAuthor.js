@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import FollowIcon from '../Icons/FollowIcon';
 
-const PostAuthor = ({post, postAuthor}) => {
+const PostAuthor = ({post,postAuthor, user}) => {
+  const [follow, setFollow] = useState(false)
+
+  useEffect(() => {
+    if (follow) setFollow(false)
+  }, [follow]);
 
   return (
     <div className='postcard_author'>
@@ -10,7 +15,7 @@ const PostAuthor = ({post, postAuthor}) => {
       
       <h3>{`${postAuthor.firstName} ${postAuthor.lastName}`}</h3>
       
-      { post.authorId === postAuthor._id ? ('') : ( <FollowIcon idToFollow={post.authorId} userId={postAuthor._id} /> ) }
+      { post.authorId === user._id ? ('') : ( <FollowIcon idToFollow={post.authorId} userId={user._id} /> ) }
       
     </div>
   );

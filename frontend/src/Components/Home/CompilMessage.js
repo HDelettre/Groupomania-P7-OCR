@@ -8,17 +8,19 @@ import { GET_MESSAGE } from "../../SliceReducers/slice.message";
 import PostCard from "./PostCard";
 import SpinLoader from "../SpinLoader/SpinLoader";
 
-const CompilMessage = () => {
+const CompilMessage = ({newMsg, setNewMsg}) => {
   const user = useSelector((state) => state.user.userData);
   console.log("user in compil: ", user);
   const dispatch = useDispatch();
 
-  const [loadMessage, setLoadMessage] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState(true);
   const [allMessage, setAllMessage] = useState("");
+  const [delMsg, setDelMsg] = useState(false)
 
   useEffect(() => {
+    console.log('USE EFFECT DANS COMPILMESSAGE')
     async function loadAllMsg() {
-      setLoadMessage(true);
+      setLoadingMessage(true);
 
       try {
         const reponse = await fetch(`${process.env.REACT_APP_API_MSG}`, {
@@ -33,20 +35,22 @@ const CompilMessage = () => {
         console.log("reponseJSON all posts: ", reponseJSON);
         setAllMessage(reponseJSON);
         dispatch(GET_MESSAGE(reponseJSON));
-        setLoadMessage(false);
+        setNewMsg(false)
+        setDelMsg(false)
+        setLoadingMessage(false);
       } catch (error) {
         console.log(error);
       } 
     }
     loadAllMsg();
-  }, [dispatch]);
+  }, [loadingMessage, newMsg, delMsg]);
 
-  return loadMessage ? (
+  return loadingMessage ? (
     <SpinLoader />
   ) : (
     <>
       {allMessage.map((post) => (
-        <PostCard post={post} key={post._id} />
+        <PostCard post={post} key={post._id} setDelMsg={setDelMsg} />
       ))}
     </>
   );

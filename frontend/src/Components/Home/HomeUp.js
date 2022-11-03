@@ -4,12 +4,12 @@ import React from 'react';
 import HomeProfile from './HomeProfile';
 import NewMessage from './NewMessage';
 
-const HomeUp = ({connectId}) => {
+const HomeUp = ({setNewMsg}) => {
     return (
         <>
-            <HomeProfile connectId={connectId}/>
+            <HomeProfile/>
 
-            <NewMessage />
+            <NewMessage setNewMsg={setNewMsg} />
         </>
     );
 }

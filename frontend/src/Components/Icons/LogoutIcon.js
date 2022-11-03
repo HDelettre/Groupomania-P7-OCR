@@ -6,8 +6,6 @@ const LogoutIcon = () => {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user.userData);
-
-  console.log('token: ', user.token)
  
   const exitUser = () => {
     async function logoutUser(){

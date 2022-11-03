@@ -32,7 +32,30 @@ exports.getAllUsers = (req, res) => {
 //
 // Middleware update user
 //
-exports.updateUser = (req, res) => {};
+exports.updateUser = (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+  return res.status(400).json({ message: "L'utilisateur n'existe pas " });
+}
+  async function updateUserProfile() {
+    try {
+      await UserModel.findByIdAndUpdate(
+        { _id: req.params.id },
+        { $set: { story: req.body.story }}
+      )
+
+      if (req.files.file) {
+        const profilePictName = JSON.parse(JSON.stringify(req.files.file))[0];
+        await UserModel.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: { imageUrl: profilePictName }}
+        )
+      }
+      return res.status(200).json({message: 'Le profil du user a été modifié avec succès !'})
+
+  } catch (error) {res.status(400).send(error)}
+  };
+  updateUserProfile();
+};
 
 //
 // Middleware delete user
@@ -93,10 +116,13 @@ exports.follow = (req, res) => {
     }
   }
   // Test si déjà suivi
-  const userFind = UserModel.findById(req.body.id);
-  if (userFind.followings.includes(req.body.idFollow)) {
-    followDown();
-  } else {
-    followUp();
-  }
+  UserModel.findById(req.body.idFollow)
+  .then((userFind) => {
+    if (userFind.followings.includes(req.body.idFollow)) {
+      followDown();
+    } else {
+      followUp();
+    }
+  })
+  .catch(error => console.log(error))
 };

@@ -45,8 +45,9 @@ exports.createMessage = (req, res) => {
         { _id: messageData.authorId },
         { $push: { posts: messageData._id } }
       );
+      console.log("Le message a été sauvegardé");
 
-      return res.status(201).json({ message: "Le message a été sauvegardé" });
+      return res.status(201).json(newMessage);
     } catch (error) {
       res.status(400).send(error);
     }
@@ -107,11 +108,9 @@ exports.deleteMessage = (req, res) => {
       const postObject = await MessageModel.findById(req.params.id);
 
       if (postObject.authorId != req.body.id) {
-        return res
-          .status(400)
-          .json({
-            message: "Vous n'etes pas autorisé à supprimer ce message !",
-          });
+        return res.status(400).json({
+          message: "Vous n'etes pas autorisé à supprimer ce message !",
+        });
       }
 
       // Check if picture is include in the post and delete
@@ -138,7 +137,69 @@ exports.deleteMessage = (req, res) => {
   }
   deletePost();
 };
+
 //
 // Middleware like message
 //
-exports.likeMessage = (req, res) => {};
+exports.likeMessage = (req, res) => {
+  
+  if (!ObjectId.isValid(req.body.idPost)) {
+    return res.status(404).json({ message: "Ce message n'existe pas !" });
+  }
+
+  if (
+    !ObjectId.isValid(req.body.idUser) ||
+    !ObjectId.isValid(req.body.idPostUser)
+  ) {
+    return res
+      .status(404)
+      .json({ message: "Au moins un utilisateur n'existe pas !" });
+  }
+
+
+
+  MessageModel.findById(req.body.idPost)
+    .then((postObject) => {
+      if (postObject.authorId === req.body.idUser) {
+        return res
+          .status(400)
+          .json({ message: "Vous ne pouvez pas liker un de vos messages !" });
+      }
+      if (postObject.LikeId.includes(req.body.idUser)) {
+        unLiked();
+      } else {
+        liked();
+      }
+    })
+    .catch((error) => res.status(501).send(error));
+
+  async function unLiked() {
+    await MessageModel.findByIdAndUpdate(
+      { _id: req.body.idPost },
+      { $pull: { LikeId: req.body.idUser } }
+    );
+
+    await UserModel.findByIdAndUpdate(
+      { _id: req.body.idUser },
+      { $pull: { likes: req.body.idPost } }
+    );
+
+    return res
+      .status(200)
+      .json({ message: req.body.idUser + ' UNLIKE ' + req.body.idPost });
+  }
+
+  async function liked() {
+    await MessageModel.findByIdAndUpdate(
+      { _id: req.body.idPost },
+      { $push: { LikeId: req.body.idUser } }
+    );
+
+    await UserModel.findByIdAndUpdate(
+      { _id: req.body.idUser },
+      { $push: { likes: req.body.idPost } }
+    );
+
+    return res.status(200).json({ message: req.body.idUser + ' LIKE ' + req.body.idPost });
+  }
+};

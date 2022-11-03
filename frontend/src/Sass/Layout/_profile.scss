@@ -30,6 +30,7 @@
 
   &_picture {
     min-width: 40%;
+    height: 130px;
     text-align: center;
 
     img {
@@ -57,6 +58,15 @@
     align-items: center;
     font-size: $icon_medium;
     color: $color_primary;
+
+    &--input {
+      width: $icon_medium;
+      height: $icon_medium;
+      position: absolute;
+      transform: translate(-68px, 0px);
+      opacity: 0;
+      cursor: pointer;
+    }
   }
 
   &_valid {

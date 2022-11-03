@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import PostAuthor from './PostAuthor';
 import PostMessage from './PostMessage';
 
-const PostCard = ({post}) => {
+const PostCard = ({post, setDelMsg}) => {
     const [postAuthor, setPostAuthor] = useState('')
 
     const user = useSelector((state)=>state.user.userData);
@@ -13,19 +13,20 @@ const PostCard = ({post}) => {
     const allUsers = useSelector((state)=>state.users.allUsers);
 
     useEffect(() => {
+        console.log('USE EFFECTDANS POSTCARD')
         for (let i=0; i < allUsers.length; i++) {
             if (allUsers[i]._id === post.authorId) {
                 setPostAuthor(allUsers[i])
                 break
             }
         }
-    }, [post]);
+    }, []);
 
     return (
         <div className='postcard'>
-            <PostAuthor post={post} postAuthor={postAuthor} />
+            <PostAuthor post={post} postAuthor={postAuthor} user={user} />
             <div className='separation_vertical'></div>
-            <PostMessage post={post} postAuthor={postAuthor} user={user} />
+            <PostMessage post={post} postAuthor={postAuthor} user={user} setDelMsg={setDelMsg} />
             <div className='separation_vertical'></div>
             <div className='postcard_information'>
                 15 Octobre 2022

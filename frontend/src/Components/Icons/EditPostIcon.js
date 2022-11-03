@@ -1,10 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { UPDATE_MESSAGE } from '../../SliceReducers/slice.message';
 
 const EditPostIcon = ({setEditPost, editPost, setEditMessage, editMessage, user, post }) => {
-
-  const dispatch=useDispatch();
 
   const editHandle = () => {
     setEditPost(true)
@@ -29,9 +25,7 @@ const EditPostIcon = ({setEditPost, editPost, setEditMessage, editMessage, user,
           Authorization: `Bearer ${user.token}`,
         }
       })
-      console.log(reponse)
-
-      
+      console.log('Reponse fetchUpdateMessage: ',reponse)
 
       setEditPost(false)
       } catch(error) {console.log(error)}

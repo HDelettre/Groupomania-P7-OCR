@@ -1,9 +1,19 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FOLLOW_USER } from '../../SliceReducers/slice.user';
 
 const FollowIcon = ({idToFollow, userId}) => {
+  const [follow, setFollow]=useState(false)
+  const dispatch=useDispatch();
   const user = useSelector((state)=>state.user.userData);
 
+  useEffect(() => {
+    if (follow) {
+      dispatch(FOLLOW_USER(idToFollow))
+      setFollow(false)
+    }
+  }, [follow]);
+  
   async function followUp() {
     const bodyRequest = {
       "idFollow": idToFollow,
@@ -20,16 +30,14 @@ const FollowIcon = ({idToFollow, userId}) => {
         }
       })
 
-      
+      console.log(reponse)
+      setFollow(true)
     }
     catch (error) {console.log(error)}
   }
-
-
-  //const followUp = () => {};
   
   return (
-    <div>
+    <div className='icon'>
       { user.followings.includes(idToFollow) ? 
       (<i className="fa-solid fa-square-minus icon" title='Déabonner' onClick={followUp}></i>)
        :
