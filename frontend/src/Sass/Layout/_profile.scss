@@ -41,13 +41,17 @@
 
   &_story {
    min-width: 60%;
-   height: 90px;
+   padding: $margin_small;
+   height: 120px;
    border: none;
    resize: none;
    box-sizing: border-box;
+   border-top: 1px solid $color_primary_light;
 
-   &:focus {
-    border: 1px solid $color_primary;
+   &--area {
+    font-family: 'Roboto', sans-serif;
+    background-color: $color_secondary_light;
+    font-size: $font_standard;
    }
   }
 

@@ -8,6 +8,10 @@ export const messageSlice = createSlice({
       state.messageData = payload
     },
 
+    ADD_MESSAGE: (state, {payload}) => {
+      state.messageData.unshift(payload)
+    },
+
     UPDATE_MESSAGE: (state, {payload}) => {
       state.messageData.map((data) => {
         if (data._id === payload[0]) {
@@ -20,10 +24,7 @@ export const messageSlice = createSlice({
     },
     
     DELETE_MESSAGE: (state, {payload}) => {
-      console.log('Payload: ', payload)
-      const postNoDeleted = state.messageData.filter (function (e) { return e !== payload})
-      console.log('DELETE MESSAGE: ', postNoDeleted);
-      return state.messageData = postNoDeleted;
+      state.messageData = state.messageData.filter((post) => post._id !== payload );
     },
 
     LIKE_MESSAGE: (state, {payload}) => {
@@ -44,6 +45,6 @@ export const messageSlice = createSlice({
   }
 })
 
-export const { GET_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE, LIKE_MESSAGE } = messageSlice.actions;
+export const { GET_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE, LIKE_MESSAGE, ADD_MESSAGE } = messageSlice.actions;
 
 export default messageSlice.reducer;

@@ -1,6 +1,7 @@
 // Packages Loading
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const UserModel = require("../models/user_model");
 
@@ -8,17 +9,18 @@ const UserModel = require("../models/user_model");
 //Middleware for create a new user
 //
 exports.createUser = (req, res) => {
+  // checking email
+  if (ObjectId.isValid(req.body.email)) {
+    return res.status(404).json({ message: "Utilisateur déjà enregistré !" });
+  }
   // checking password length
   if (req.body.password.length < 8) {
-    const errors = {
-      password: "Le mot de passe doir contenir au moins 8 caractères.",
-    };
-    return res.status(400).send({ errors });
+    return res.status(400).json({ message: "Mot de passe trop court !" });
   }
 
   // Hash password
   const hashPasswordFunction = async function () {
-    try {
+    
       const passwordHashed = await bcrypt.hash(req.body.password, 10);
 
       // Create new user model
@@ -30,20 +32,15 @@ exports.createUser = (req, res) => {
       });
 
       // New user save in BDD
-      const newUserSave = async function () {
+      
         try {
           await newUser.save();
           return res
             .status(201)
             .json({ message: "Compte nouvel utilisateur créé avec succès" });
         } catch (error) {
-          res.status(400).send(error);
+          res.status(500).send('Error during new user saving: ', error);
         }
-      };
-      newUserSave();
-    } catch (error) {
-      res.status(400).send(error);
-    }
   };
   hashPasswordFunction();
 };
@@ -65,8 +62,7 @@ exports.loginUser = (req, res) => {
         user.password
       );
       if (!validPassword) {
-        const errors = { password: "Mot de passe incorrect" };
-        return res.status(400).send({ errors });
+        return res.status(400).json({ message: 'Mot de passe incorrect !'});
       }
       // Create token
       const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN);

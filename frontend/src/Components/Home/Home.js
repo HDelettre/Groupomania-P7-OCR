@@ -15,7 +15,8 @@ const Home = () => {
   const [newMsg, setNewMsg] = useState(false)
 
   useEffect(() => {
-    console.log('USE EFFECT DANS HOME')
+    if (loadMessage)
+    {console.log('USE EFFECT DANS HOME')
     async function loadAllUsers() {
       setLoadMessage(true);
       try {
@@ -36,8 +37,8 @@ const Home = () => {
         console.log(error);
       }
     }
-    loadAllUsers();
-  }, []);
+    loadAllUsers();}
+  }, [loadMessage]);
 
   return loadMessage ? (
     <SpinLoader />

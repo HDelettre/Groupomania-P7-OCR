@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import InsertPictMsg from "../Icons/InsertPictMsg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { NEW_MESSAGE } from "../../SliceReducers/slice.user";
+import { ADD_MESSAGE } from "../../SliceReducers/slice.message";
 
 const NewMessage = ({setNewMsg}) => {
   const [message, setMessage] = useState("");
@@ -9,6 +11,8 @@ const NewMessage = ({setNewMsg}) => {
   const [msgError, setMsgError] = useState("");
 
   const user = useSelector((state) => state.user.userData);
+
+  const dispatch = useDispatch();
 
   const messageInput = (e) => {
     setMessage(e.target.value);
@@ -33,11 +37,17 @@ const NewMessage = ({setNewMsg}) => {
             headers: { Authorization: `Bearer ${user.token}` }}
         );
         const reponseJSON = await reponse.json();
-        console.log('ReponseJSON newMessage: ', reponseJSON)
+        console.log('ReponseJSON newMessage: ', reponseJSON._id)
+
+        dispatch(NEW_MESSAGE(reponseJSON._id))
+
+        dispatch(ADD_MESSAGE(reponseJSON))
+
           setNewMsg(true)
         setMessage("");
         setMsgPict("");
         setPictFile();
+        setMsgError('');
       } catch (error) {
         console.log(error);
       }
@@ -61,11 +71,11 @@ const NewMessage = ({setNewMsg}) => {
           {msgPict ? <img src={msgPict} alt="message" /> : ""}
         </div>
 
-        <div className="postcard_error">{msgError}</div>
+        <div className="homecontainer_error">{msgError}</div>
       </div>
 
       <div className="homecontainer_navbarmessage">
-        <InsertPictMsg setMsgPict={setMsgPict} setPictFile={setPictFile} />
+        <InsertPictMsg setMsgPict={setMsgPict} setPictFile={setPictFile} setMsgError={setMsgError} />
 
         <i
           className="fa-regular fa-envelope homecontainer_navbarmessage--btn icon"

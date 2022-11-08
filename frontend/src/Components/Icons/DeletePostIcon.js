@@ -1,9 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
+// Import Reducers
+import { DELETE_MESSAGE } from '../../SliceReducers/slice.message';
+import { DELETE_POSTREF } from '../../SliceReducers/slice.user';
 
-const DeletePostIcon = ({user, post, setDelMsg}) => {
+const DeletePostIcon = ({user, post}) => {
 
-  
+  const dispatch=useDispatch();
 
 const deletePost = () => {
   if (window.confirm('Veuillez confirmer la suppression du message !')) {
@@ -22,7 +26,10 @@ const deletePost = () => {
           }
         })
         console.log(reponse);
-        setDelMsg(true)
+        
+        dispatch(DELETE_MESSAGE(post._id))
+
+       // dispatch(DELETE_POSTREF(post._id))
         
       } catch (error) {console.log(error)}
     }

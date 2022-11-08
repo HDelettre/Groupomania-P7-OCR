@@ -8,6 +8,10 @@ export const userSlice = createSlice({
       state.userData = payload
     },
 
+    NEW_MESSAGE: (state, {payload}) => {
+      state.userData.posts.push(payload)
+    },
+
     DELETE_POSTREF: (state, {payload}) => {
       const postRef = state.userData.posts.filter (function (e) { return e !== payload});
       console.log('DELETE POSTREF: ', postRef)
@@ -36,7 +40,8 @@ export const userSlice = createSlice({
     },
 
     UPDATE_USER: (state, {payload}) => {
-      state.userData.story = payload[0];
+      if (payload[0] !== '')
+      {state.userData.story = payload[0]};
       if (payload[1]) {
         state.userData.imageUrl = payload[1]
       }
@@ -44,6 +49,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const { GET_USER, DELETE_POSTREF, FOLLOW_USER, LIKE_USER, UPDATE_USER } = userSlice.actions;
+export const { GET_USER, DELETE_POSTREF, FOLLOW_USER, LIKE_USER, UPDATE_USER, NEW_MESSAGE } = userSlice.actions;
 
 export default userSlice.reducer;

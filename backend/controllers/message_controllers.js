@@ -12,7 +12,7 @@ const UserModel = require("../models/user_model");
 exports.getAllMessages = (req, res) => {
   async function LoadingAllMessages() {
     try {
-      const reponse = await MessageModel.find();
+      const reponse = await MessageModel.find().sort({ createdAt: -1 });
       console.log("get all message: ", reponse);
       return res.status(200).json(reponse);
     } catch (error) {
@@ -155,8 +155,6 @@ exports.likeMessage = (req, res) => {
       .status(404)
       .json({ message: "Au moins un utilisateur n'existe pas !" });
   }
-
-
 
   MessageModel.findById(req.body.idPost)
     .then((postObject) => {

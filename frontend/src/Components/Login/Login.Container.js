@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
-// Importation des composants
-import LoginSetup from "./LoginSetup_old";
-import LoginForm from "./LoginForm";
+// Import Components
 import Header from "../Header/Header";
-import LoginError from "./LoginError";
+import LoginForm from "./Login.Form";
+import LoginSetup from "./Login.Setup";
 
-const LoginSheet = ({ setConnectId }) => {
+const LoginContainer = () => {
+  // loginOption: false = signup, true=login
   const [loginOption, setLoginOption] = useState(false);
+  // ErrorMsg : détecte si une erreur survient lors de la connection
   const [errorMsg, setErrorMsg] = useState(false);
 
   return (
@@ -20,14 +21,19 @@ const LoginSheet = ({ setConnectId }) => {
         <LoginForm
           setLoginOption={setLoginOption}
           loginOption={loginOption}
-          setConnectId={setConnectId}
           setErrorMsg={setErrorMsg}
         />
       </div>
 
-      {errorMsg ? <LoginError /> : ""}
+      {errorMsg ? (
+        <div className="login_error">
+          'Veuillez vérifier les informations saisies !'
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };
 
-export default LoginSheet;
+export default LoginContainer;

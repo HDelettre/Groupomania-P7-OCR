@@ -9,54 +9,63 @@ const LikePostIcon = ({ post }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    
     if (addLike) {
       dispatch(LIKE_MESSAGE([post._id, user._id]));
 
       dispatch(LIKE_USER(post._id));
-
-      setAddLike(false)
+      
+      setAddLike(false);
     }
-  }, [addLike]);
+  }, [addLike ]);
 
   const likedBy = () => {
     async function fetchLikePost() {
       const bodyRequest = {
         idPost: post._id,
         idUser: user._id,
-        idPostUser: post.authorId
-      }
+        idPostUser: post.authorId,
+      };
 
       try {
         const reponse = await fetch(`${process.env.REACT_APP_API_MSG}/like`, {
-          method: 'PATCH',
+          method: "PATCH",
           body: JSON.stringify(bodyRequest),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
-          }
-        })
-        console.log('FetchLikePost: ', reponse)
-        setAddLike(true)
-      } catch (error) {console.log(error)}
-    };
+          },
+        });
+        
+        console.log("FetchLikePost: ", reponse);
+        
+        
+        
+        setAddLike(true);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     fetchLikePost();
   };
 
-  return user.likes.includes(post._id) ? (
+  return (
     <>
-      <i
-        className="fa-solid fa-heart icon"
-        title="Je n'aime plus"
-        onClick={likedBy}
-      ></i>
-    </>
-  ) : (
-    <>
-      <i
-        className="fa-regular fa-heart icon"
-        title="J'aime"
-        onClick={likedBy}
-      ></i>
+      {user.likes.includes(post._id) ? (
+        <i
+          className="fa-solid fa-heart icon"
+          title="Je n'aime plus"
+          onClick={likedBy}
+        ></i>
+      ) : (
+        <i
+          className="fa-regular fa-heart icon"
+          title="J'aime"
+          onClick={likedBy}
+        ></i>
+      )}
+      <br />
+      {post.LikeId.length}
     </>
   );
 };

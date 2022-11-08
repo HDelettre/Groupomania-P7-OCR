@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 
 // Import Components
 import DeletePostIcon from "../Icons/DeletePostIcon";
 import EditPostIcon from "../Icons/EditPostIcon";
-
-// Import Slice
-import { UPDATE_MESSAGE } from "../../SliceReducers/slice.message";
 import LikePostIcon from "../Icons/LikePostIcon";
 
-const PostMessage = ({ post, postAuthor, user, setDelMsg }) => {
+const PostMessage = ({ post, user }) => {
   const [editPost, setEditPost] = useState(false);
   const [editMessage, setEditMessage] = useState(post.messageTxt);
 
-  const dispatch = useDispatch();
-
-  /*useEffect(() => {
-    console.log('USE EFFECT POSTMESSAGE')
-    if (editPost) {
-      dispatch(UPDATE_MESSAGE([post._id, editMessage]));
-      setEditPost(false)
-    }
-  }, [editPost]);
-*/
   return (
     <>
       <div className="postcard_message">
@@ -52,7 +38,7 @@ const PostMessage = ({ post, postAuthor, user, setDelMsg }) => {
         {post.authorId === user._id ? (
           <>
             <>
-              <i className="fa-solid fa-heart icon" title="Like"></i>
+              <i className="fa-solid fa-heart" title="Like"></i>
               {` ${post.LikeId.length}`}
             </>
             <br />
@@ -68,7 +54,6 @@ const PostMessage = ({ post, postAuthor, user, setDelMsg }) => {
             <DeletePostIcon
               user={user}
               post={post}
-              setDelMsg={setDelMsg}
             />
           </>
         ) : (

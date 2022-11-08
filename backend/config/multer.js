@@ -3,7 +3,7 @@ const multer = require('multer');
 const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpg",
-  "image/png": "png",
+  "image/png": "png"
 };
 
 const storage = multer.diskStorage({
@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 
   filename: (req, file, callback) => {
     const fileExtension = MIME_TYPES[file.mimetype];
+    console.log('FIELDNAME IN MULTER: ', file.fieldname)
     let fileName = "";
     if (file.fieldname === 'file') {
       const name = file.originalname.split(' ').join('_');

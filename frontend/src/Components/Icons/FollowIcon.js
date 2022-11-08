@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FOLLOW_USER } from '../../SliceReducers/slice.user';
 
-const FollowIcon = ({idToFollow, userId}) => {
+const FollowIcon = ({idToFollow, user}) => {
   const [follow, setFollow]=useState(false)
   const dispatch=useDispatch();
-  const user = useSelector((state)=>state.user.userData);
+
+  console.log('USER IN FOLLOWICON: ', user);
 
   useEffect(() => {
     if (follow) {
@@ -13,11 +14,11 @@ const FollowIcon = ({idToFollow, userId}) => {
       setFollow(false)
     }
   }, [follow]);
-  
+
   async function followUp() {
     const bodyRequest = {
       "idFollow": idToFollow,
-      "id": userId
+      "id": user._id
     }
 
     try {

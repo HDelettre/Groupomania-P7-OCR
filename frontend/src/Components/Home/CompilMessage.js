@@ -10,7 +10,7 @@ import SpinLoader from "../SpinLoader/SpinLoader";
 
 const CompilMessage = ({newMsg, setNewMsg}) => {
   const user = useSelector((state) => state.user.userData);
-  console.log("user in compil: ", user);
+  
   const dispatch = useDispatch();
 
   const [loadingMessage, setLoadingMessage] = useState(true);
@@ -42,7 +42,9 @@ const CompilMessage = ({newMsg, setNewMsg}) => {
         console.log(error);
       } 
     }
-    loadAllMsg();
+    if (loadingMessage) {
+      loadAllMsg();
+    }
   }, [loadingMessage, newMsg, delMsg]);
 
   return loadingMessage ? (

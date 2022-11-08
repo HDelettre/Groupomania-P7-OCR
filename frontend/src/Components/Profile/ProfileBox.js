@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import FollowIcon from '../Icons/FollowIcon';
 
-const ProfileBox = ({idToFollow, userId}) => {
+const ProfileBox = ({idToFollow, user}) => {
 
   const allUsers = useSelector((state) => state.users.allUsers)
   const [userFollow, setUserFollow] = useState('')
@@ -21,7 +21,7 @@ const ProfileBox = ({idToFollow, userId}) => {
     
       <div className='profile_follow--box'>
         {`${userFollow.firstName} ${userFollow.lastName}`}
-        <FollowIcon idToFollow={idToFollow} userId={userId} />
+        <FollowIcon idToFollow={idToFollow} user={user} />
         </div>
     
   );

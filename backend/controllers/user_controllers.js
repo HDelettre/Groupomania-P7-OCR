@@ -1,5 +1,4 @@
 // Packages Loading
-const multer = require("../config/multer");
 const UserModel = require("../models/user_model");
 const ObjectId = require("mongoose").Types.ObjectId;
 
@@ -12,10 +11,10 @@ exports.getOneUser = (req, res) => {
   }
 
   UserModel.findById(req.params.id)
-    .then((userData) => {
-      res.status(200).json({ userData });
+    .then((data) => {
+      res.status(200).json({ data });
     })
-    .catch((error) => res.status(400).json({ message: "Error" + error }));
+    .catch((error) => res.status(400).json({ message: "Error during getOneUser: " + error }));
 };
 
 //
