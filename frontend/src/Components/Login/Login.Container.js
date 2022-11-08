@@ -16,7 +16,11 @@ const LoginContainer = () => {
       <Header />
 
       <div className="login">
-        <LoginSetup setLoginOption={setLoginOption} loginOption={loginOption} />
+        <LoginSetup
+          setLoginOption={setLoginOption}
+          loginOption={loginOption}
+          setErrorMsg={setErrorMsg}
+        />
 
         <LoginForm
           setLoginOption={setLoginOption}

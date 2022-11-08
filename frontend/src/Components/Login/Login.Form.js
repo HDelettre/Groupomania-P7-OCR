@@ -19,13 +19,23 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
   // gestion des événements
   const emailChange = (e) => {
     setEmail(e.target.value);
-    setErrorMsg("");
+    setErrorMsg(false);
   };
 
   const passwordChange = (e) => {
     setPassword(e.target.value);
-    setErrorMsg("");
+    setErrorMsg(false);
   };
+
+  const firstNameHandle = (e) => {
+    setFirstName(e.target.value);
+    setErrorMsg(false);
+  }
+
+  const lastNameHandle = (e) => {
+    setLastName(e.target.value);
+    setErrorMsg(false);
+  }
 
   // validation du formulaire
   const validHandle = () => {
@@ -48,15 +58,15 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
         body: JSON.stringify(userData),
         headers: { "Content-Type": "application/json" }
       });
-  
-      const reponseJSON = await reponse.json();
 
-      const connectId = JSON.parse(JSON.stringify(reponseJSON))
-
-      fetchUserData(connectId);
-
-      navigate('/Home');
-      
+      if (reponse.ok) {
+        const reponseJSON = await reponse.json();
+        const connectId = JSON.parse(JSON.stringify(reponseJSON))
+        fetchUserData(connectId);
+        navigate('/Home');
+      } else {
+        setErrorMsg(true);
+      }
     }
     catch (error) { console.log('Error during userDataLoading: ', error)}
   }
@@ -76,8 +86,13 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Reponse Fetch Signup: ", reponse);
-      setLoginOption(true);
+      if (reponse.ok) {
+        console.log("Reponse Fetch Signup: ", reponse);
+        setLoginOption(true);
+      } else {
+        setErrorMsg(true);
+      }
+
     } catch (error) {
       console.log(error);
       setErrorMsg(true);
@@ -139,7 +154,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
               type="text"
               name="firstname"
               id="firstname"
-              onChange={(event) => setFirstName(event.target.value)}
+              onChange={firstNameHandle}
               value={firstName}
               required
               className="login_form--input"
@@ -152,7 +167,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
               type="text"
               name="lastname"
               id="lastname"
-              onChange={(event) => setLastName(event.target.value)}
+              onChange={lastNameHandle}
               value={lastName}
               required
               className="login_form--input"

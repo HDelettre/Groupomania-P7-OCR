@@ -1,13 +1,13 @@
 import React from "react";
 
-const LoginSetup = ({ setLoginOption, loginOption }) => {
-  
+const LoginSetup = ({ setLoginOption, loginOption, setErrorMsg }) => {
   const loginSelect = (e) => {
     if (e.target.id === "signup") {
-      setLoginOption(false);
+      setLoginOption(false)
     } else {
-      setLoginOption(true);
+      setLoginOption(true)
     }
+    setErrorMsg(false)
   };
 
   return (
@@ -15,7 +15,7 @@ const LoginSetup = ({ setLoginOption, loginOption }) => {
       <div
         className={loginOption ? "login_setup--btn" : "login_setup--btn select"}
         onClick={loginSelect}
-        id="signup"
+        id='signup'
       >
         S'inscrire
       </div>
@@ -23,7 +23,7 @@ const LoginSetup = ({ setLoginOption, loginOption }) => {
       <div
         className={loginOption ? "login_setup--btn select" : "login_setup--btn"}
         onClick={loginSelect}
-        id="login"
+        id='login'
       >
         Se connecter
       </div>

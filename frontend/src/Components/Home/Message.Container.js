@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // import components
 import SpinLoader from "../SpinLoader/SpinLoader";
+import MessageBox from "./Message.box";
 
 // import Reducer
 import { GET_ALLUSERS } from "../../SliceReducers/slice.users";
-import MessageBox from "./Message.box";
 
 const MessageContainer = ({ user }) => {
   const [loadingMsg, setLoadingMsg] = useState(true);
-  const [allUsers, setAllUsers] = useState("");
 
   const allMessage = useSelector((state) => state.message.messageData);
   const dispatch = useDispatch();
 
-  console.log("ALL MESSAGE: ", allMessage);
-
-  useEffect(() => {
-    fetchAllUsers();
-
-    setLoadingMsg(false);
-  }, []);
-
   async function fetchAllUsers() {
-    console.log("FETCHALLUSERS");
     setLoadingMsg(true);
     try {
       const reponse = await fetch(`${process.env.REACT_APP_API_USER}`, {
@@ -37,18 +27,21 @@ const MessageContainer = ({ user }) => {
       const reponseJSON = await reponse.json();
 
       dispatch(GET_ALLUSERS(JSON.parse(JSON.stringify(reponseJSON.allUsers))));
-      setAllUsers(JSON.parse(JSON.stringify(reponseJSON.allUsers)));
+      
     } catch (error) {
       console.log("Error during fetchAllUsers: ", error);
     }
   }
+  fetchAllUsers();
+
+  if (loadingMsg && user) { setLoadingMsg(false)}
 
   return loadingMsg ? (
     <SpinLoader />
   ) : (
     <div className="postcontainer">
       <h2>Les derniers messages</h2>
-      <MessageBox user={user} allMessage={allMessage} />
+      <MessageBox allMessage={allMessage} />
     </div>
   );
 };

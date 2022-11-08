@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
 // Import components
-import PostCard from './Posts.Card';
+import PostCard from "./Posts.Card";
 
-const MessageBox = ({user, allMessage}) => {
-
+const MessageBox = ({ allMessage }) => {
   return (
     <>
       {allMessage.map((post) => (
@@ -12,6 +11,6 @@ const MessageBox = ({user, allMessage}) => {
       ))}
     </>
   );
-}
+};
 
 export default MessageBox;

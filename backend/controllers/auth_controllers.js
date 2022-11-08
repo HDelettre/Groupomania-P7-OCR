@@ -75,7 +75,7 @@ exports.loginUser = (req, res) => {
 
       return res.status(200).json(user.id);
     } catch (error) {
-      console.log("Login: Utilisateur non trouvé: ", error);
+      return res.status(400).json({ message: "Login: Utilisateur non trouvé: ", error});
     }
   };
   findUser();

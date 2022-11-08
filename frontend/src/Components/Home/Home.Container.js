@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Import Components
@@ -14,18 +14,9 @@ import { GET_MESSAGE } from "../../SliceReducers/slice.message";
 // Component
 const HomeContainer = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [allMessage, setAllMessage] = useState('')
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userData);
-
-  useEffect(() => {
-    if (isLoading) {
-      fetchAllMessage();
-
-      setIsLoading(false);
-    }
-  }, []);
 
   async function fetchAllMessage() {
     console.log('FETCHALLMESSAGE')
@@ -39,13 +30,17 @@ const HomeContainer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
+      console.log('REPONSE FETCH: ', reponse)
       const reponseJSON = await reponse.json();
       dispatch(GET_MESSAGE(JSON.parse(JSON.stringify(reponseJSON))))
-      
-      ;
     } catch (error) {
       console.log(error);
     }
+
+  }
+  if (isLoading && user) {
+    fetchAllMessage();
+    setIsLoading(false)
   }
 
   return (

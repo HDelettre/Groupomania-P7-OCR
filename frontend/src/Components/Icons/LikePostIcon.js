@@ -9,15 +9,14 @@ const LikePostIcon = ({ post }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
     if (addLike) {
       dispatch(LIKE_MESSAGE([post._id, user._id]));
 
       dispatch(LIKE_USER(post._id));
-      
+
       setAddLike(false);
     }
-  }, [addLike ]);
+  }, [addLike]);
 
   const likedBy = () => {
     async function fetchLikePost() {
@@ -36,11 +35,9 @@ const LikePostIcon = ({ post }) => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        
+
         console.log("FetchLikePost: ", reponse);
-        
-        
-        
+
         setAddLike(true);
       } catch (error) {
         console.log(error);

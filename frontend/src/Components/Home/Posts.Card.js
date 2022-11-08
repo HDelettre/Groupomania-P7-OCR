@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 
 // Import Components
 import FollowIcon from "../Icons/FollowIcon";
-import PostMessage from './PostMessage';
+import PostMessage from "./PostMessage";
 
 // Import Utils
-import { dateOnly, timeOnly } from '../../Utils/dateFormat';
+import { dateOnly, timeOnly } from "../../Utils/dateFormat";
 
 const PostsCard = ({ post }) => {
   const [posterData, setPosterData] = useState("");
@@ -40,16 +40,16 @@ const PostsCard = ({ post }) => {
         )}
       </div>
 
-      <div className='separation_vertical'></div>
+      <div className="separation_vertical"></div>
 
       <PostMessage post={post} user={user} />
 
-      <div className='separation_vertical'></div>
-            <div className='postcard_information'>
-                {dateOnly(post.createdAt)}
-                <br/>
-                {timeOnly(post.createdAt)}
-            </div>
+      <div className="separation_vertical"></div>
+      <div className="postcard_information">
+        {dateOnly(post.createdAt)}
+        <br />
+        {timeOnly(post.createdAt)}
+      </div>
     </div>
   );
 };

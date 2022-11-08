@@ -51,15 +51,10 @@ const PostMessage = ({ post, user }) => {
               post={post}
             />
             <br />
-            <DeletePostIcon
-              user={user}
-              post={post}
-            />
+            <DeletePostIcon user={user} post={post} />
           </>
         ) : (
-          
           <LikePostIcon post={post} />
-          
         )}
       </div>
     </>
