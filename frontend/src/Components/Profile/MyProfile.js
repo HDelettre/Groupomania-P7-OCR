@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Import components
-import Header from "../Header/Header";
 import ProfileInfo from "./ProfileInfo";
 import ProfileFollow from "./Profile.Follow";
 import FriendsSuggest from "./Friends.Suggest";
@@ -77,7 +76,6 @@ const MyProfile = () => {
 
   return (
     <>
-      <Header />
       <div className="profilecontainer">
         <div className="profile">
           <h2>Profil de {`${user.firstName} ${user.lastName}`}</h2>

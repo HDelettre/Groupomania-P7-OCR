@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 // Import Components
-import Header from "../Header/Header";
 import LoginForm from "./Login.Form";
 import LoginSetup from "./Login.Setup";
 
@@ -13,7 +12,6 @@ const LoginContainer = () => {
 
   return (
     <>
-      <Header />
 
       <div className="login">
         <LoginSetup

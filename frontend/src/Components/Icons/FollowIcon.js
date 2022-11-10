@@ -6,8 +6,6 @@ const FollowIcon = ({idToFollow, user}) => {
   const [follow, setFollow]=useState(false)
   const dispatch=useDispatch();
 
-  console.log('USER IN FOLLOWICON: ', user);
-
   useEffect(() => {
     if (follow) {
       dispatch(FOLLOW_USER(idToFollow))

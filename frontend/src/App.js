@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 
 // Import components
 import LoginContainer from './Components/Login/Login.Container';
@@ -12,6 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path='/' element= { <LoginContainer /> } />
 
         <Route path='/Home' element= { <HomeContainer /> } />
