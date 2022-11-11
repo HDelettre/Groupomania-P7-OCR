@@ -8,7 +8,7 @@ import PostMessage from "./PostMessage";
 // Import Utils
 import { dateOnly, timeOnly } from "../../Utils/dateFormat";
 
-const PostsCard = ({ post }) => {
+const PostsCard = ({ post, setLoadPosts }) => {
   const [posterData, setPosterData] = useState("");
 
   const user = useSelector((state) => state.user.userData);
@@ -16,14 +16,13 @@ const PostsCard = ({ post }) => {
   const allUsers = useSelector((state) => state.users.allUsers);
 
   useEffect(() => {
-    console.log("USE EFFECT DANS POSTCARD");
     for (let i = 0; i < allUsers.length; i++) {
       if (allUsers[i]._id === post.authorId) {
         setPosterData(allUsers[i]);
         break;
       }
     }
-  }, [post]);
+  }, []);
 
   return (
     <div className="postcard">
@@ -42,7 +41,7 @@ const PostsCard = ({ post }) => {
 
       <div className="separation_vertical"></div>
 
-      <PostMessage post={post} user={user} />
+      <PostMessage post={post} user={user} setLoadPosts={setLoadPosts} />
 
       <div className="separation_vertical"></div>
       <div className="postcard_information">

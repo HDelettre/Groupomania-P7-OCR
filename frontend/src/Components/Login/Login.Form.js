@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // import sliceReducer
 import { GET_USER } from '../../SliceReducers/slice.user';
 
-const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
+const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) => {
+
+  useEffect(() => {
+    formCleanUp()
+  }, []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,6 +19,16 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  const formCleanUp = () => {
+    console.log('CLEANUP')
+    document.getElementById("loginform").reset();
+    const loginFotmLength = document.getElementById("loginform").length;
+    console.log(loginFotmLength);
+    for (let i=0; i<loginFotmLength; i++) {
+      document.getElementById("loginform")[i].value=''
+    }
+  }
 
   // gestion des événements
   const emailChange = (e) => {
@@ -63,6 +77,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
         const reponseJSON = await reponse.json();
         const connectId = JSON.parse(JSON.stringify(reponseJSON))
         fetchUserData(connectId);
+        setCreateMsg('');
         navigate('/Home');
       } else {
         setErrorMsg(true);
@@ -89,6 +104,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
       if (reponse.ok) {
         console.log("Reponse Fetch Signup: ", reponse);
         setLoginOption(true);
+        setCreateMsg('Votre compte a été créé avec succès! Vous pouvez maintenant vous connecter.')
       } else {
         setErrorMsg(true);
       }
@@ -117,6 +133,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
         action=""
         name="login"
         className="login_form"
+        id='loginform'
         onSubmit={validHandle}
       >
         <label htmlFor="email">Email:</label>
@@ -158,6 +175,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
               value={firstName}
               required
               className="login_form--input"
+              placeholder="Prénom"
             />
             <br />
 
@@ -171,6 +189,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg }) => {
               value={lastName}
               required
               className="login_form--input"
+              placeholder="Nom"
             />
             <br />
           </>

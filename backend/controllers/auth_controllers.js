@@ -28,7 +28,7 @@ exports.createUser = (req, res) => {
         email: req.body.email,
         password: passwordHashed,
         firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        lastName: req.body.lastName
       });
 
       // New user save in BDD
@@ -39,7 +39,7 @@ exports.createUser = (req, res) => {
             .status(201)
             .json({ message: "Compte nouvel utilisateur créé avec succès" });
         } catch (error) {
-          res.status(500).send('Error during new user saving: ', error);
+          return res.status(500).send('Error during new user saving: ', error);
         }
   };
   hashPasswordFunction();

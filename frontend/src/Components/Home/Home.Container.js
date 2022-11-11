@@ -13,7 +13,9 @@ import { GET_MESSAGE } from "../../SliceReducers/slice.message";
 // Component
 const HomeContainer = () => {
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [loadPosts, setLoadPosts] = useState(true);
+  const [newPost, setNewPost] = useState(false);
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userData);
 
@@ -27,14 +29,14 @@ const HomeContainer = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`
-          }
+            Authorization: `Bearer ${user.token}`,
+          },
         });
         console.log("REPONSE FETCH: ", reponse);
         const reponseJSON = await reponse.json();
         console.log("REPONSEJSON FETCH ALL MESSAGE: ", reponseJSON);
         dispatch(GET_MESSAGE(JSON.parse(JSON.stringify(reponseJSON))));
-        
+
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -52,10 +54,18 @@ const HomeContainer = () => {
       <div className="homecontainer">
         <ProfileResume />
 
-        <NewMessage />
+        <NewMessage
+          setNewPost={setNewPost}
+        />
       </div>
 
-      <MessageContainer user={user} />
+      <MessageContainer
+        user={user}
+        setLoadPosts={setLoadPosts}
+        loadPosts={loadPosts}
+        newPost={newPost}
+        setNewPost={setNewPost}
+      />
     </>
   );
 };

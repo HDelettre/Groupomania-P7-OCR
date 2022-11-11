@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LIKE_MESSAGE } from "../../SliceReducers/slice.message";
 import { LIKE_USER } from "../../SliceReducers/slice.user";
 
-const LikePostIcon = ({ post }) => {
+const LikePostIcon = ({ post, setLoadPosts }) => {
   const [addLike, setAddLike] = useState(false);
   const user = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
@@ -13,6 +13,8 @@ const LikePostIcon = ({ post }) => {
       dispatch(LIKE_MESSAGE([post._id, user._id]));
 
       dispatch(LIKE_USER(post._id));
+
+      setLoadPosts(true);
 
       setAddLike(false);
     }

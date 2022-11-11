@@ -1,39 +1,37 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 // Import Components
-import LogoutIcon from '../Icons/LogoutIcon';
+import LogoutIcon from "../Icons/LogoutIcon";
 
 // Import Utils
-import {dateForm } from '../../Utils/dateFormat';
+import { dateForm } from "../../Utils/dateFormat";
 
 const ProfileResume = () => {
-
-  const user = useSelector((state) => state.user.userData)
-  console.log(('user dans profile resume: ', user))
+  const user = useSelector((state) => state.user.userData);
 
   return (
     <div className="homecontainer_profile">
-        <h2>Bonjour {`${user.firstName} ${user.lastName}`} </h2>
-        <img
-          src={`${process.env.REACT_APP_API_IMG}/profile/${user.imageUrl}`}
-          alt=""
-        />
-        <p>Incrit depuis le {dateForm(user.createdAt)}</p>
-        <div className="separation_horizontal"></div>
-        <div className="homecontainer_navbarprofile">
+      <h2>Bonjour {`${user.firstName} ${user.lastName}`} </h2>
+      <img
+        src={`${process.env.REACT_APP_API_IMG}/profile/${user.imageUrl}`}
+        alt=""
+      />
+      <p>Incrit depuis le {dateForm(user.createdAt)}</p>
+      <div className="separation_horizontal"></div>
+      <div className="homecontainer_navbarprofile">
         <Link to="/Profile">
-      <i
-        className="fas fa-user homecontainer_navbarprofile--btn"
-        title="Edit Profil"
-      ></i>
-    </Link>
+          <i
+            className="fas fa-user homecontainer_navbarprofile--btn"
+            title="Edit Profil"
+          ></i>
+        </Link>
 
-          <LogoutIcon />
-        </div>
+        <LogoutIcon />
       </div>
+    </div>
   );
-}
+};
 
 export default ProfileResume;

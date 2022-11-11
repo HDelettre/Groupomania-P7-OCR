@@ -75,6 +75,12 @@
     border:2px solid red;
     padding: $margin_small;
   }
+
+  &_message {
+    font-size: $font_large;
+    font-weight: 600;
+    padding: $margin_small;
+  }
 }
 
 .select {

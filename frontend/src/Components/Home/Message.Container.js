@@ -8,47 +8,68 @@ import MessageBox from "./Message.box";
 // import Reducer
 import { GET_ALLUSERS } from "../../SliceReducers/slice.users";
 
-const MessageContainer = ({ user }) => {
+const MessageContainer = ({ user, setLoadPosts, loadPosts, setNewPost, newPost }) => {
   const [loadingMsg, setLoadingMsg] = useState(true);
   const [countPosts, setCountPosts] = useState(5);
+  const [allPosts, setAllPosts] = useState("");
 
   const allMessage = useSelector((state) => state.message.messageData);
-  
-  const allPosts = allMessage.slice(0, countPosts)
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (loadPosts || newPost) {
+      setAllPosts(allMessage.slice(0, countPosts));
+      if (loadPosts) {setCountPosts(countPosts + 5);}
+      setLoadPosts(false);
+      setNewPost(false);
+    }
+  }, [loadPosts, newPost]);
 
-    if (loadingMsg && user) {fetchAllUsers() }
-    
+  useEffect(() => {
+    async function fetchAllUsers() {
+      setLoadingMsg(true);
+      try {
+        const reponse = await fetch(`${process.env.REACT_APP_API_USER}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const reponseJSON = await reponse.json();
+
+        dispatch(
+          GET_ALLUSERS(JSON.parse(JSON.stringify(reponseJSON.allUsers)))
+        );
+        setLoadingMsg(false);
+      } catch (error) {
+        console.log("Error during fetchAllUsers: ", error);
+      }
+    }
+    if (loadingMsg && user) {
+      fetchAllUsers();
+    }
+
+    window.addEventListener("scroll", AddPosts);
+    return () => window.removeEventListener("scroll", AddPosts);
   }, [loadingMsg, user]);
 
-  async function fetchAllUsers() {
-    setLoadingMsg(true);
-    try {
-      const reponse = await fetch(`${process.env.REACT_APP_API_USER}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const reponseJSON = await reponse.json();
-
-      dispatch(GET_ALLUSERS(JSON.parse(JSON.stringify(reponseJSON.allUsers))));
-      setLoadingMsg(false)
-    } catch (error) {
-      console.log("Error during fetchAllUsers: ", error);
+  const AddPosts = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 1 >
+      document.scrollingElement.scrollHeight
+    ) {
+      setLoadPosts(true);
     }
-  }
+  };
 
   return loadingMsg ? (
     <SpinLoader />
   ) : (
     <div className="postcontainer">
       <h2>Les derniers messages</h2>
-      <MessageBox allPosts={allPosts} />
+      <MessageBox allPosts={allPosts} setLoadPosts={setLoadPosts} />
     </div>
   );
 };

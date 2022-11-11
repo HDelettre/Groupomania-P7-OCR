@@ -1,13 +1,14 @@
 import React from "react";
 
-const LoginSetup = ({ setLoginOption, loginOption, setErrorMsg }) => {
+const LoginSetup = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) => {
   const loginSelect = (e) => {
     if (e.target.id === "signup") {
-      setLoginOption(false)
+      setLoginOption(false);
     } else {
-      setLoginOption(true)
+      setLoginOption(true);
     }
-    setErrorMsg(false)
+    setErrorMsg(false);
+    setCreateMsg('');
   };
 
   return (

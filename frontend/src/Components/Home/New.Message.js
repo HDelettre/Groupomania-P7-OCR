@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 
 // Import Components
 import InsertPictMsg from "../Icons/InsertPictMsg";
@@ -8,8 +8,7 @@ import InsertPictMsg from "../Icons/InsertPictMsg";
 import { ADD_MESSAGE } from "../../SliceReducers/slice.message";
 import { NEW_MESSAGE } from "../../SliceReducers/slice.user";
 
-
-const NewMessage = ({setIsLoadingMsg}) => {
+const NewMessage = ({ setNewPost }) => {
   const [message, setMessage] = useState("");
   const [msgPict, setMsgPict] = useState("");
   const [pictFile, setPictFile] = useState();
@@ -21,45 +20,44 @@ const NewMessage = ({setIsLoadingMsg}) => {
 
   const messageInput = (e) => {
     setMessage(e.target.value);
-    setMsgError('')
+    setMsgError("");
   };
 
   const sendMessage = () => {
-    if (message ==='' && msgPict === '') {
-      setMsgError('Merci de taper un message, ou d\'inclure une photo !');
+    if (message === "" && msgPict === "") {
+      setMsgError("Merci de taper un message, ou d'inclure une photo !");
     } else {
       const msgData = new FormData();
       msgData.append("authorId", user._id);
       msgData.append("messageTxt", message);
 
-      if (pictFile) msgData.append('file', pictFile);
+      if (pictFile) msgData.append("file", pictFile);
 
-      fetchNewMessage(msgData)
-      setIsLoadingMsg(true)
+      fetchNewMessage(msgData);
     }
   };
 
   async function fetchNewMessage(msgData) {
     try {
-      const reponse = await fetch(
-        `${process.env.REACT_APP_API_MSG}/newPost`,
-        {
-          method: "POST",
-          body: msgData,
-          headers: { Authorization: `Bearer ${user.token}` }}
-      );
+      const reponse = await fetch(`${process.env.REACT_APP_API_MSG}/newPost`, {
+        method: "POST",
+        body: msgData,
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
       const reponseJSON = await reponse.json();
-      console.log('ReponseJSON newMessage: ', reponseJSON._id)
+      console.log("ReponseJSON newMessage: ", reponseJSON._id);
 
-      dispatch(NEW_MESSAGE(reponseJSON._id))
+      dispatch(NEW_MESSAGE(reponseJSON._id));
 
-      dispatch(ADD_MESSAGE(reponseJSON))
+      dispatch(ADD_MESSAGE(reponseJSON));
 
-       // setNewMsg(true)
+      setNewPost(true);
+
       setMessage("");
       setMsgPict("");
       setPictFile();
-      setMsgError('');
+      setMsgError("");
     } catch (error) {
       console.log(error);
     }

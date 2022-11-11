@@ -5,7 +5,7 @@ import DeletePostIcon from "../Icons/DeletePostIcon";
 import EditPostIcon from "../Icons/EditPostIcon";
 import LikePostIcon from "../Icons/LikePostIcon";
 
-const PostMessage = ({ post, user }) => {
+const PostMessage = ({ post, user, setLoadPosts }) => {
   const [editPost, setEditPost] = useState(false);
   const [editMessage, setEditMessage] = useState(post.messageTxt);
 
@@ -51,10 +51,14 @@ const PostMessage = ({ post, user }) => {
               post={post}
             />
             <br />
-            <DeletePostIcon user={user} post={post} />
+            <DeletePostIcon
+              user={user}
+              post={post}
+              setLoadPosts={setLoadPosts}
+            />
           </>
         ) : (
-          <LikePostIcon post={post} />
+          <LikePostIcon post={post} setLoadPosts={setLoadPosts} />
         )}
       </div>
     </>

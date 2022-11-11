@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { DELETE_MESSAGE } from "../../SliceReducers/slice.message";
 import { DELETE_POSTREF } from "../../SliceReducers/slice.user";
 
-const DeletePostIcon = ({ user, post }) => {
+const DeletePostIcon = ({ user, post, setLoadPosts }) => {
   const dispatch = useDispatch();
 
   const deletePost = () => {
@@ -32,6 +32,9 @@ const DeletePostIcon = ({ user, post }) => {
           dispatch(DELETE_MESSAGE(post._id));
 
           dispatch(DELETE_POSTREF(post._id));
+
+          setLoadPosts(true);
+          
         } catch (error) {
           console.log(error);
         }
