@@ -17,6 +17,20 @@ exports.createUser = (req, res) => {
   if (req.body.password.length < 8) {
     return res.status(400).json({ message: "Mot de passe trop court !" });
   }
+  // Vérification firstName/lastName
+/*
+  const regexRequirement = /^([a-zA-Zéèêùç\-])$/g;
+  const checkFirstName = regexRequirement.exec(req.body.firstName);
+  const checkLastName = regexRequirement.exec(req.body.lastName);
+
+  console.log('requete: ', req.body.firstName, ' / ', req.body.lastName)
+  
+  if (!checkFirstName && !checkLastName) {
+    return res.status(400).json({ message: 'Revoir le format Prénom/Nom !'})
+  }
+  console.log('check: ', checkFirstName, ' / ', checkLastName);
+*/
+  // Formatage FirstName/LastName
 
   // Hash password
   const hashPasswordFunction = async function () {
@@ -30,9 +44,7 @@ exports.createUser = (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName
       });
-
       // New user save in BDD
-      
         try {
           await newUser.save();
           return res
@@ -44,17 +56,24 @@ exports.createUser = (req, res) => {
   };
   hashPasswordFunction();
 };
-
 //
 //Middleware for login an user
 //
 exports.loginUser = (req, res) => {
-  // Check if user is in BDD
+  /*
+  if (!ObjectId.isValid(req.body.email)) {
+    return res.status(404).json({ message: "Utilisateur inexistant !" });
+  }
+  */
   const findUser = async function () {
     try {
       const user = await UserModel.findOne({ email: req.body.email }).select(
         "+password"
       );
+      // Checking role
+      if (user.role === 'BLOCKED') {
+        return res.status(400).json({ message: 'Connexion refusée, Compte bloqué !'});
+      }
 
       // Password checking
       const validPassword = await bcrypt.compare(
@@ -85,7 +104,9 @@ exports.loginUser = (req, res) => {
 //Middleware for logout an user
 //
 exports.logoutUser = (req, res) => {
-  console.log("id: ", req.params.id);
+  if (!ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({ message: "Utilisateur inexistant !" });
+  }
   const exitUser = async function () {
     try {
       await UserModel.findByIdAndUpdate(

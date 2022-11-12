@@ -21,10 +21,8 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
   const [lastName, setLastName] = useState("");
 
   const formCleanUp = () => {
-    console.log('CLEANUP')
     document.getElementById("loginform").reset();
     const loginFotmLength = document.getElementById("loginform").length;
-    console.log(loginFotmLength);
     for (let i=0; i<loginFotmLength; i++) {
       document.getElementById("loginform")[i].value=''
     }
@@ -44,6 +42,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
   const firstNameHandle = (e) => {
     setFirstName(e.target.value);
     setErrorMsg(false);
+    
   }
 
   const lastNameHandle = (e) => {
@@ -104,7 +103,8 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
       if (reponse.ok) {
         console.log("Reponse Fetch Signup: ", reponse);
         setLoginOption(true);
-        setCreateMsg('Votre compte a été créé avec succès! Vous pouvez maintenant vous connecter.')
+        setCreateMsg('Votre compte a été créé avec succès! Vous pouvez maintenant vous connecter.');
+        setErrorMsg(false);
       } else {
         setErrorMsg(true);
       }

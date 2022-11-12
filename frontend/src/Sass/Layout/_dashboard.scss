@@ -1,0 +1,68 @@
+.usercontainer {
+  margin: $margin_xlarge 0;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &_box {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid $color_primary;
+    margin: $margin_medium 0;
+    border-radius: $radius_medium;
+
+    &--img {
+      width: 20%;
+
+      img {
+        object-fit: cover;
+        width: 80%;
+        border-radius: $radius_medium;
+      }
+    }
+
+    &--name {
+      width: 40%;
+    }
+
+    &--role {
+      width: 40%;
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+
+  &_btn {
+    padding: $margin_small;
+    border: 1px solid $color_primary;
+    border-radius: $radius_small;
+    cursor: pointer;
+  }
+
+  &_select {
+    background-color: $color_primary;
+    color: $color_white;
+  }
+
+  &_navbar {
+    background-color: $color_primary_light;
+    padding: $margin_medium;
+    margin: $margin_medium;
+    border-radius: $radius_medium;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:visited {
+      color: $color_tertiary;
+    }
+
+    &:hover {
+      background-color: $color_primary;
+      color: $color_white;
+    }
+  }
+}

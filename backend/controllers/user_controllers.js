@@ -14,14 +14,16 @@ exports.getOneUser = (req, res) => {
     .then((data) => {
       res.status(200).json({ data });
     })
-    .catch((error) => res.status(400).json({ message: "Error during getOneUser: " + error }));
+    .catch((error) =>
+      res.status(400).json({ message: "Error during getOneUser: " + error })
+    );
 };
 
 //
 // Middleware GET all users
 //
 exports.getAllUsers = (req, res) => {
-  UserModel.find()
+  UserModel.find().sort({ lastName: -1 })
     .then((allUsers) => {
       res.status(200).json({ allUsers });
     })
@@ -32,36 +34,75 @@ exports.getAllUsers = (req, res) => {
 // Middleware update user
 //
 exports.updateUser = (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
-  return res.status(400).json({ message: "L'utilisateur n'existe pas " });
-}
+  if (!ObjectId.isValid(req.auth.userToken)) {
+    return res.status(400).json({ message: "L'utilisateur n'existe pas " });
+  }
 
   async function updateUserProfile() {
     try {
       await UserModel.findByIdAndUpdate(
-        { _id: req.params.id },
-        { $set: { story: req.body.story }}
-      )
-        console.log(req.body.story, '/ ', req.files.profile);
-      if (req.files.profile) {
-        const profilePictName = req.files.profile[0].filename
-        await UserModel.findByIdAndUpdate(
-          { _id: req.params.id },
-          { $set: { imageUrl: profilePictName }}
-        )
-      }
-      return res.status(200).json({message: 'Le profil du user a été modifié avec succès !'})
+        { _id: req.auth.userToken },
+        { $set: { story: req.body.story } }
+      );
 
-  } catch (error) {res.status(400).send(error)}
-  };
+      if (req.files.profile) {
+        const profilePictName = req.files.profile[0].filename;
+        await UserModel.findByIdAndUpdate(
+          { _id: req.auth.userToken },
+          { $set: { imageUrl: profilePictName } }
+        );
+      }
+      return res
+        .status(200)
+        .json({ message: "Le profil du user a été modifié avec succès !" });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  }
   updateUserProfile();
 };
 
 //
 // Middleware delete user
 //
-exports.deleteUser = (req, res) => {};
+exports.newRoleUser = (req, res) => {
+  if (
+    !ObjectId.isValid(req.body.idToChange) ||
+    !ObjectId.isValid(req.body.idUser)
+  ) {
+    return res
+      .status(400)
+      .json({ message: "Au moins un utilisateur n'existe pas !" });
+  }
+  async function checkAdmin() {
+    try {
+      await UserModel.findById(req.body.idUser).then((user) => {
+        if (user.role != process.env.CODE_ADMIN) {
+          return res.status(400).json({
+            message:
+              "Vous devez être administrateur pour supprimer un compte !",
+          });
+        } else {
+          changeRole();
+        }
+      });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  }
+  checkAdmin();
 
+  async function changeRole() {
+    try {
+      await UserModel.findByIdAndUpdate(
+        { _id: req.body.idToChange },
+        { $set: { role: req.body.newRole } }
+      );
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  }
+};
 //
 // Middleware follow
 //
@@ -92,7 +133,7 @@ exports.follow = (req, res) => {
         { $push: { followers: req.body.id } }
       );
 
-      return res.status(200).json({ message: 'follow updated'})
+      return res.status(200).json({ message: "follow updated" });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -110,19 +151,19 @@ exports.follow = (req, res) => {
         { $pull: { followers: req.body.id } }
       );
 
-      return res.status(200).json({ message: 'unfollow updated'})
+      return res.status(200).json({ message: "unfollow updated" });
     } catch (error) {
       return res.status(400).send(error);
     }
   }
   // Test si déjà suivi
   UserModel.findById(req.body.idFollow)
-  .then((userFind) => {
-    if (userFind.followings.includes(req.body.idFollow)) {
-      followDown();
-    } else {
-      followUp();
-    }
-  })
-  .catch(error => console.log(error))
+    .then((userFind) => {
+      if (userFind.followings.includes(req.body.idFollow)) {
+        followDown();
+      } else {
+        followUp();
+      }
+    })
+    .catch((error) => console.log(error));
 };

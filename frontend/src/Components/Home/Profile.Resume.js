@@ -10,6 +10,7 @@ import { dateForm } from "../../Utils/dateFormat";
 
 const ProfileResume = () => {
   const user = useSelector((state) => state.user.userData);
+  console.log(user.role, ' / ', process.env.REACT_APP_API_ADMIN)
 
   return (
     <div className="homecontainer_profile">
@@ -27,6 +28,12 @@ const ProfileResume = () => {
             title="Edit Profil"
           ></i>
         </Link>
+
+        { user.role === process.env.REACT_APP_API_ADMIN ? (
+          <Link to="/Admin">
+            <i className="fa-solid fa-users icon"></i>
+          </Link>
+        ) : ('')}
 
         <LogoutIcon />
       </div>

@@ -18,7 +18,7 @@ const FriendsSuggest = ({user}) => {
     <div className='profile_suggest'>
       <h2>Suggestion d'amis</h2>
       <div className='profile_suggest--list'>
-      { unFollowUser.map((unFollow) => <FriendsBox unFollow={unFollow} user={user} /> )}
+      { unFollowUser.map((unFollow) => <FriendsBox unFollow={unFollow} user={user} key={`unfollow${unFollow}`} /> )}
         </div> 
     </div>
   ); 

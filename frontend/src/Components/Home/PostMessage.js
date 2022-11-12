@@ -35,7 +35,8 @@ const PostMessage = ({ post, user, setLoadPosts }) => {
         )}
       </div>
       <div className="postcard_message--navbar">
-        {post.authorId === user._id ? (
+        {post.authorId === user._id ||
+        user.role === `${process.env.REACT_APP_API_ADMIN}` ? (
           <>
             <>
               <i className="fa-solid fa-heart" title="Like"></i>
@@ -56,9 +57,16 @@ const PostMessage = ({ post, user, setLoadPosts }) => {
               post={post}
               setLoadPosts={setLoadPosts}
             />
+            <br />
           </>
         ) : (
+          ""
+        )}
+
+        {post.authorId !== user._id ? (
           <LikePostIcon post={post} setLoadPosts={setLoadPosts} />
+        ) : (
+          ""
         )}
       </div>
     </>

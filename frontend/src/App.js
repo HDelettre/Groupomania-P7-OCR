@@ -5,6 +5,7 @@ import LoginContainer from './Components/Login/Login.Container';
 import HomeContainer from './Components/Home/Home.Container';
 import MyProfile from './Components/Profile/MyProfile';
 import LogoutSheet from './Components/Logout/LogoutSheet';
+import Dashboard from './Components/Admin/Dashboard';
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
         <Route path='/Profile' element= { <MyProfile /> } />
 
         <Route path='/Logout' element= { <LogoutSheet /> } />
+
+        <Route path='/Admin' element= { <Dashboard /> } />
 
       </Routes>
     </BrowserRouter>
