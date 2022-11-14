@@ -8,13 +8,14 @@ import UserBox from "./User.Box";
 
 const Dashboard = () => {
   const users = useSelector((state) => state.users.allUsers);
+  const admin = useSelector((state) => state.user.userData);
 
-  return users ? (
+  return users && admin ? (
     <div className="usercontainer">
       <Link to='/Home' className="usercontainer_navbar">RETOUR ACCUEIL</Link>
 
       {users.map((user) => (
-        <UserBox user={user} />
+        <UserBox user={user} admin={admin} key={user._id} />
       ))}
     </div>
   ) : (

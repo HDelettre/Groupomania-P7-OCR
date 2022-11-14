@@ -17,7 +17,6 @@ const storage = multer.diskStorage({
 
   filename: (req, file, callback) => {
     const fileExtension = MIME_TYPES[file.mimetype];
-    console.log('FIELDNAME IN MULTER: ', file.fieldname)
     let fileName = "";
     if (file.fieldname === 'file') {
       const name = file.originalname.split(' ').join('_');

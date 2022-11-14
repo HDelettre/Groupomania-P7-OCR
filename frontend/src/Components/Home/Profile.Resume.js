@@ -10,7 +10,6 @@ import { dateForm } from "../../Utils/dateFormat";
 
 const ProfileResume = () => {
   const user = useSelector((state) => state.user.userData);
-  console.log(user.role, ' / ', process.env.REACT_APP_API_ADMIN)
 
   return (
     <div className="homecontainer_profile">

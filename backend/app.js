@@ -1,13 +1,23 @@
 /* Chargement du package express */
 const express = require('express');
 
+/* Chargement package helmet */
+const helmet = require('helmet');
+
+// Chargement package rate-limit
+const rateLimit = require("express-rate-limit");
+
+// Paramètre rate Limit
+const limiter = rateLimit({
+  max: 100,                                 // 100 requêtes maximum
+  windowMs: 60 * 60 * 1000,                 // 1 heure
+  message: "Vous avez atteint la limite de requête, essayer plus tard !"
+});
+
 /* Chargement package dotenv */
 require('dotenv').config({
     path : './config/.env'
 })
-
-/* chemin vers le dossier image */
-//const path = require('path');
 
 /* Déclaration des routes */
 const routesMessages = require('./routes/message_routes');
@@ -16,11 +26,18 @@ const routesUsers = require('./routes/users_routes');
 // connection mongodb
 require('./config/mongodb');
 
-/* Création de l'application express */
+// Création de l'application express
 const app = express();
 
 // Gestion des images
 app.use('/pictures', express.static(__dirname + '/pictures'));
+
+// Application helmet à application */
+app.use(helmet());
+
+// Application package rate-limt
+console.log('LIMITER: ', limiter)
+//app.use('/api/auth', limiter);
 
 /* CORS */
 app.use((req, res, next) => {

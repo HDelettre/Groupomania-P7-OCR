@@ -1,0 +1,52 @@
+.othercontainer {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid $color_primary;
+  border-radius: $radius_large;
+  margin: $margin_xlarge;
+
+  &_title {
+    width: 100%;
+    margin-left: $margin_xlarge;
+  }
+
+  &_row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--picture {
+      width: 25%;
+
+      img {
+        width: 90%;
+        object-fit: cover;
+      }
+    }
+
+    &--infos {
+      width: 40%;
+      border-left:1px solid $color_primary_light;
+      border-right:1px solid $color_primary_light;
+      padding: $margin_small;
+    }
+
+    &--story {
+      width: 35%;
+      padding: $margin_small;
+    }
+  }
+
+  &_btn {
+    background-color: $color_primary;
+    color: $color_white;
+    padding: $margin_medium;
+    border-radius: $radius_small;
+    cursor: pointer;
+    text-decoration: none;
+    margin: $margin_large;
+  }
+}

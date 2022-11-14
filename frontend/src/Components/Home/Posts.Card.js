@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 // Import Components
 import FollowIcon from "../Icons/FollowIcon";
 import PostMessage from "./PostMessage";
+import ViewProfile from "../Icons/View.Profile";
+import SpinLoader from '../SpinLoader/SpinLoader';
 
 // Import Utils
 import { dateOnly, timeOnly } from "../../Utils/dateFormat";
@@ -24,7 +26,9 @@ const PostsCard = ({ post, setLoadPosts }) => {
     }
   }, []);
 
-  return (
+  return !posterData ? (
+    <SpinLoader />
+  ) : (
     <div className="postcard">
       <div className="postcard_author">
         <img
@@ -35,7 +39,10 @@ const PostsCard = ({ post, setLoadPosts }) => {
         {post.authorId === user._id ? (
           ""
         ) : (
-          <FollowIcon idToFollow={post.authorId} user={user} />
+          <div className="postcard_author--icons">
+            <FollowIcon idToFollow={post.authorId} user={user} />
+            <ViewProfile otherUserId={post.authorId} />
+          </div>
         )}
       </div>
 

@@ -13,10 +13,9 @@ exports.getAllMessages = (req, res) => {
   async function LoadingAllMessages() {
     try {
       const reponse = await MessageModel.find().sort({ createdAt: -1 });
-      console.log("get all message: ", reponse);
       return res.status(200).json(reponse);
     } catch (error) {
-      res.status(400).send(error);
+      return res.status(400).send(error);
     }
   }
   LoadingAllMessages();
@@ -49,7 +48,7 @@ exports.createMessage = (req, res) => {
 
       return res.status(201).json(newMessage);
     } catch (error) {
-      res.status(400).send(error);
+      return res.status(400).send(error);
     }
   }
   saveMessage();
@@ -85,7 +84,7 @@ exports.updateMessage = (req, res) => {
         .status(201)
         .json({ message: "Le message a été modifié avec succès !" });
     } catch (error) {
-      res.status(500).send(error);
+      return res.status(500).send(error);
     }
   }
   modifyMessage();
@@ -132,7 +131,7 @@ exports.deleteMessage = (req, res) => {
 
       return res.status(200).json({ message: "message supprimé avec succès" });
     } catch (error) {
-      res.status(500).send(error);
+      return res.status(500).send(error);
     }
   }
   deletePost();

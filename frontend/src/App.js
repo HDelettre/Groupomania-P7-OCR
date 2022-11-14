@@ -6,6 +6,7 @@ import HomeContainer from './Components/Home/Home.Container';
 import MyProfile from './Components/Profile/MyProfile';
 import LogoutSheet from './Components/Logout/LogoutSheet';
 import Dashboard from './Components/Admin/Dashboard';
+import OtherProfile from './Components/Profile/OtherProfile';
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
         <Route path='/Logout' element= { <LogoutSheet /> } />
 
         <Route path='/Admin' element= { <Dashboard /> } />
+
+        <Route path='/OtherProfile' element={ <OtherProfile /> } />
 
       </Routes>
     </BrowserRouter>

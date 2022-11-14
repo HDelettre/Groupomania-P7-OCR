@@ -21,7 +21,7 @@ router.get( "/logout/:id", auth, authCtrl.logoutUser );
 router.get("/:id", userCtrl.getOneUser);
 router.get( "/", userCtrl.getAllUsers);
 router.put( "/:id", auth, multer, userCtrl.updateUser );
-router.put( "/:id", auth, userCtrl.newRoleUser );
+router.put( "/newrole/:id", auth, userCtrl.newRoleUser );
 router.patch( "/follow", auth, userCtrl.follow );
 
 /* exportation router */

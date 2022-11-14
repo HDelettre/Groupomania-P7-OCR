@@ -23,7 +23,7 @@ exports.getOneUser = (req, res) => {
 // Middleware GET all users
 //
 exports.getAllUsers = (req, res) => {
-  UserModel.find().sort({ lastName: -1 })
+  UserModel.find().sort({ lastName: 1 })
     .then((allUsers) => {
       res.status(200).json({ allUsers });
     })
@@ -63,11 +63,11 @@ exports.updateUser = (req, res) => {
 };
 
 //
-// Middleware delete user
+// Middleware change role of user
 //
 exports.newRoleUser = (req, res) => {
   if (
-    !ObjectId.isValid(req.body.idToChange) ||
+    !ObjectId.isValid(req.params.id) ||
     !ObjectId.isValid(req.body.idUser)
   ) {
     return res
@@ -95,11 +95,12 @@ exports.newRoleUser = (req, res) => {
   async function changeRole() {
     try {
       await UserModel.findByIdAndUpdate(
-        { _id: req.body.idToChange },
+        { _id: req.params.id },
         { $set: { role: req.body.newRole } }
       );
+      return res.status(201).json({ message: 'Le role du User a été modifié avec succès !'})
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(500).send(error);
     }
   }
 };
