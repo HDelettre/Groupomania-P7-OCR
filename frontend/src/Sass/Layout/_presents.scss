@@ -3,6 +3,9 @@
   justify-content: center;
   margin-top: $margin_xlarge;
   width: 90%;
+  @include mobile {
+    flex-direction: column;
+  }
 
   &_profile {
     display: flex;
@@ -11,17 +14,35 @@
     width: 30%;
     border-right: 2px solid $color_primary;
 
+    @include mobile {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      border: none;
+    }
+
     h2 {
       border-bottom: 2px solid $color_primary;
+      font-size: $font_medium;
+      @include mobile {
+        min-width: 100%;
+      }
     }
 
     img {
       width: 70%;
       object-fit: cover;
+      @include mobile {
+        width: 25%;
+      }
     }
 
     p {
       margin: $margin_small;
+      text-align: center;
+      @include mobile {
+        width: 50%;
+      }
     }
   }
 
@@ -32,6 +53,10 @@
     width: 65%;
     font-size: $icon_medium;
     margin-top: $margin_small;
+    @include mobile {
+      flex-direction: column;
+      width: 20%;
+    }
 
     a {
       text-decoration: none;
@@ -46,18 +71,22 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    font-size: $icon_medium;    
+    font-size: $icon_medium;
+    @include mobile {
+      flex-direction: row;
+    }
 
     &--btn {
-      margin: $margin_large $margin_medium;
-      color: $color_primary;
+      position: relative;
     }
 
     &--input {
       width: $icon_medium;
       height: $icon_large;
-      margin: $margin_large $margin_medium;
+      position: absolute;
+      transform: translate(5px, -30px);
       cursor: pointer;
+      opacity: 0;
     }
   }
 
@@ -66,6 +95,9 @@
     flex-direction: column;
     align-items: center;
     width: 75%;
+    @include mobile {
+      width: 100%;
+    }
 
     h2 {
       align-self: flex-start;
@@ -78,7 +110,7 @@
       border: 1px solid $color_primary;
       border-bottom: none;
       box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       resize: none;
       padding: $margin_small;
 
@@ -115,4 +147,10 @@
 
 .vertical {
   flex-direction: column;
+}
+
+.insertpicture {
+  width: $icon_large;
+  height: $icon_large;
+  position: relative;
 }

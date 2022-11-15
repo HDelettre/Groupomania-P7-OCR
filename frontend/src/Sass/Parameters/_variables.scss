@@ -32,3 +32,10 @@ $radius_small: 5px;
 $radius_medium: 10px;
 $radius_large: 15px;
 $radius_xlarge: 20px;
+
+// BreakPoints
+$breakpoints: (
+  desktop:1200px,
+  tablette: 768px,
+  mobile: 400px
+)

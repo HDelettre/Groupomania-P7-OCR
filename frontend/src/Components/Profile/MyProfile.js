@@ -80,14 +80,14 @@ const MyProfile = () => {
         <div className="profile">
           <h2>Profil de {`${user.firstName} ${user.lastName}`}</h2>
 
-          <div className="profile_row">
+          <div className="profile_rowup">
             <ProfileInfo user={user} />
             <div className="profile_picture">
               <img src={profilePict} alt={`${user.firstName} ${user.lastName}`} />
             </div>
           </div>
 
-          <div className="profile_row">
+          <div className="profile_rowdown">
             {profileEdit ? (
               <textarea
                 name="story"
@@ -122,18 +122,19 @@ const MyProfile = () => {
                     title="Editer la présentation"
                     onClick={() => setProfileEdit(true)}
                   ></i>
-
+                  <div className="insertpicture">
                   <i
-                    className="fa-regular fa-image icon"
+                    className="fa-regular fa-image icon profile_navbar--btn"
                     title="Changer ma photo"
-                  ></i>
+                    ></i>
                   <input
                     type="file"
                     name="profile"
                     accept=".jpg, .jpeg, .png"
                     onChange={insertPicture}
                     className="profile_navbar--input"
-                  />
+                    />
+                    </div>
                   <Link to="/Home">
                     <i className="fa-solid fa-house icon" title="Accueil"></i>
                   </Link>

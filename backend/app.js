@@ -36,8 +36,7 @@ app.use('/pictures', express.static(__dirname + '/pictures'));
 app.use(helmet());
 
 // Application package rate-limt
-console.log('LIMITER: ', limiter)
-//app.use('/api/auth', limiter);
+app.use('/api/auth', limiter);
 
 /* CORS */
 app.use((req, res, next) => {

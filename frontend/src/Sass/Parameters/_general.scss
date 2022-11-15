@@ -11,18 +11,37 @@ body {
   margin-top: $margin_medium;
   background-color: $color_white;
   color: $color_tertiary;
-
   font-family: 'Roboto', sans-serif;
   font-size: $font_standard;
+  @include mobile {
+    font-size: $font_small;
+  }
 
   h1 {
     font-size: $font_large;
     font-weight: 800;
+    @include mobile {
+      font-size: $font_medium;
+      
+    }
   }
 
   h2{
     font-size: $font_medium;
     font-weight: 600;
+    @include tablette {
+      font-size: $font_standard;
+    }
+    @include mobile {
+      font-size: $font_standard;
+    }
+  }
+
+  h3 {
+    font-size: $font_medium;
+    @include mobile {
+      font-size: $font_standard;
+    }
   }
 }
 
@@ -45,6 +64,10 @@ body {
     width: 80%;
     height: 3px;
     margin: $margin_medium 0;
+    @include mobile {
+      opacity: 0;
+      width: 0;
+    }
   }
 }
 

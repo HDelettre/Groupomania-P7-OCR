@@ -4,6 +4,7 @@
   align-items: center;
   width: 100%;
   border: 1px solid $color_primary;
+  box-sizing: border-box;
 
   &_logo {
     width: 25%;
@@ -13,10 +14,8 @@
     }
   }
 
-
   &_title {
     width: 75%;
     text-align: center;
   }
-
 }
