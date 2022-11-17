@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginSetup = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) => {
+const LoginSetup = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg, setBlockedMsg }) => {
   const loginSelect = (e) => {
     if (e.target.id === "signup") {
       setLoginOption(false);
@@ -8,6 +8,7 @@ const LoginSetup = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) 
       setLoginOption(true);
     }
     setErrorMsg(false);
+    setBlockedMsg(false);
     setCreateMsg('');
   };
 

@@ -7,10 +7,12 @@ import LoginSetup from "./Login.Setup";
 const LoginContainer = () => {
   // loginOption: false => signup, true => login
   const [loginOption, setLoginOption] = useState(false);
+  // BlockedMsg : détecte si le compte est bloqué
+  const [blockedMsg, setBlockedMsg] = useState(false);
   // ErrorMsg : détecte si une erreur survient lors de la connection
   const [errorMsg, setErrorMsg] = useState(false);
   // CreateMsg : Annonce la réussite de la création du compte
-  const [createMsg, setCreateMsg] = useState('');
+  const [createMsg, setCreateMsg] = useState("");
 
   return (
     <>
@@ -20,6 +22,7 @@ const LoginContainer = () => {
           loginOption={loginOption}
           setErrorMsg={setErrorMsg}
           setCreateMsg={setCreateMsg}
+          setBlockedMsg={setBlockedMsg}
         />
 
         <LoginForm
@@ -27,20 +30,24 @@ const LoginContainer = () => {
           loginOption={loginOption}
           setErrorMsg={setErrorMsg}
           setCreateMsg={setCreateMsg}
+          setBlockedMsg={setBlockedMsg}
         />
       </div>
 
-      {createMsg ? (
-        <div className="login_message">
-          {createMsg}
+      {createMsg ? <div className="login_message">{createMsg}</div> : ""}
+
+      {errorMsg ? (
+        <div className="login_error">
+          'Veuillez vérifier les informations saisies !'
         </div>
       ) : (
         ""
       )}
 
-      {errorMsg ? (
+      {blockedMsg ? (
         <div className="login_error">
-          'Veuillez vérifier les informations saisies !'
+          'Votre compte est bloqué ! Veuillez contacter l'administrateur du site
+          !'
         </div>
       ) : (
         ""

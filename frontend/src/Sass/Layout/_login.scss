@@ -4,9 +4,13 @@
   min-height: 280px;
   display: flex;
   justify-content: center;
-  
-  
   border:1 px solid $color_primary;
+  @include tablette {
+    width: 100%;
+  }
+  @include mobile {
+    width: 100%;
+  }
   
   &_setup{
     width: 50%;
@@ -27,6 +31,12 @@
       border-radius: $margin_small;
       cursor: pointer;
       transition-duration: 500;
+      @include tablette {
+        min-width: 100px;
+      }
+      @include mobile {
+        min-width: 80px;
+      } 
 
       &:hover {
         border:2px solid $color_primary;
@@ -47,7 +57,13 @@
     
     &--input {
       padding: $margin_small;
-      min-width: 180px;    
+      min-width: 180px;
+      @include tablette {
+        min-width: 140px;
+      }
+      @include mobile {
+        min-width: 120px;
+      } 
     }
 
     &--submit {

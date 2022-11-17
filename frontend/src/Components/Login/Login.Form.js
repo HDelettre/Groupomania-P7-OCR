@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // import sliceReducer
-import { GET_USER } from '../../SliceReducers/slice.user';
+import { GET_USER } from "../../SliceReducers/slice.user";
 
-const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) => {
-
+const LoginForm = ({
+  setLoginOption,
+  loginOption,
+  setErrorMsg,
+  setCreateMsg,
+  setBlockedMsg
+}) => {
   useEffect(() => {
-    formCleanUp()
+    formCleanUp();
   }, []);
 
   const dispatch = useDispatch();
@@ -20,35 +25,42 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const regexRequirement = /^[A-Za-zéèêùçà-]+$/;
+
   const formCleanUp = () => {
     document.getElementById("loginform").reset();
     const loginFotmLength = document.getElementById("loginform").length;
-    for (let i=0; i<loginFotmLength; i++) {
-      document.getElementById("loginform")[i].value=''
+    for (let i = 0; i < loginFotmLength; i++) {
+      document.getElementById("loginform")[i].value = "";
     }
-  }
+  };
 
   // gestion des événements
   const emailChange = (e) => {
     setEmail(e.target.value);
     setErrorMsg(false);
+    setBlockedMsg(false);
   };
 
   const passwordChange = (e) => {
     setPassword(e.target.value);
     setErrorMsg(false);
+    setBlockedMsg(false);
   };
 
   const firstNameHandle = (e) => {
-    setFirstName(e.target.value);
+    if (regexRequirement.test(e.target.value))
+    {setFirstName(e.target.value);
     setErrorMsg(false);
-    
-  }
+    setBlockedMsg(false);}
+  };
 
   const lastNameHandle = (e) => {
-    setLastName(e.target.value);
+    if (regexRequirement.test(e.target.value))
+    {setLastName(e.target.value);
     setErrorMsg(false);
-  }
+    setBlockedMsg(false);}
+  };
 
   // validation du formulaire
   const validHandle = () => {
@@ -69,20 +81,26 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
       const reponse = await fetch(`${process.env.REACT_APP_API_USER}/login`, {
         method: "POST",
         body: JSON.stringify(userData),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       });
+
+      console.log('reponse login: ',reponse)
 
       if (reponse.ok) {
         const reponseJSON = await reponse.json();
-        const connectId = JSON.parse(JSON.stringify(reponseJSON))
+        const connectId = JSON.parse(JSON.stringify(reponseJSON));
         fetchUserData(connectId);
-        setCreateMsg('');
-        navigate('/Home');
+        setCreateMsg("");
+        navigate("/Home");
+      } else if (reponse.status === 402) {
+        setErrorMsg(false);
+        setBlockedMsg(true);
       } else {
         setErrorMsg(true);
       }
+    } catch (error) {
+      console.log("Error during userDataLoading: ", error);
     }
-    catch (error) { console.log('Error during userDataLoading: ', error)}
   }
 
   // fonction signup
@@ -103,12 +121,18 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
       if (reponse.ok) {
         console.log("Reponse Fetch Signup: ", reponse);
         setLoginOption(true);
-        setCreateMsg('Votre compte a été créé avec succès! Vous pouvez maintenant vous connecter.');
+        setCreateMsg(
+          "Votre compte a été créé avec succès! Vous pouvez maintenant vous connecter."
+        );
         setErrorMsg(false);
+        setBlockedMsg(false);
+      } else if (reponse.status(402)) {
+        setErrorMsg(false);
+        setBlockedMsg(true);
       } else {
         setErrorMsg(true);
+        setBlockedMsg(false);
       }
-
     } catch (error) {
       console.log(error);
       setErrorMsg(true);
@@ -117,12 +141,15 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
 
   // Loading User data
   async function fetchUserData(connectId) {
-    const userData = await fetch(`${process.env.REACT_APP_API_USER}/${connectId}`, {
-      method: 'GET',
-      headers: { "Content-Type": "application/json" }
-    })
+    const userData = await fetch(
+      `${process.env.REACT_APP_API_USER}/${connectId}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
-    const userDataJSON = await userData.json();    
+    const userDataJSON = await userData.json();
 
     dispatch(GET_USER(JSON.parse(JSON.stringify(userDataJSON.data))));
   }
@@ -133,7 +160,7 @@ const LoginForm = ({ setLoginOption, loginOption, setErrorMsg, setCreateMsg }) =
         action=""
         name="login"
         className="login_form"
-        id='loginform'
+        id="loginform"
         onSubmit={validHandle}
       >
         <label htmlFor="email">Email:</label>

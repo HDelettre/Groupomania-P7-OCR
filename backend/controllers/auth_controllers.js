@@ -18,19 +18,40 @@ exports.createUser = (req, res) => {
     return res.status(400).json({ message: "Mot de passe trop court !" });
   }
   // Vérification firstName/lastName
-/*
-  const regexRequirement = /^([a-zA-Zéèêùç\-])$/g;
-  const checkFirstName = regexRequirement.exec(req.body.firstName);
-  const checkLastName = regexRequirement.exec(req.body.lastName);
 
-  console.log('requete: ', req.body.firstName, ' / ', req.body.lastName)
+  const regexRequirement = /^[A-Za-zéèêùçà-]+$/;
+  const checkFirstName = regexRequirement.test(req.body.firstName);
+  const checkLastName = regexRequirement.test(req.body.lastName);
   
-  if (!checkFirstName && !checkLastName) {
+  if (!checkFirstName || !checkLastName) {
     return res.status(400).json({ message: 'Revoir le format Prénom/Nom !'})
   }
   console.log('check: ', checkFirstName, ' / ', checkLastName);
-*/
+
   // Formatage FirstName/LastName
+  let bddFirstName = req.body.firstName.toLowerCase();
+  let bddLastName = req.body.lastName.toLowerCase();
+
+  const tiretFirstName = bddFirstName.search(/\-/);
+  const tiretLastName = bddLastName.search(/\-/);
+
+  if (tiretFirstName > -1) {
+    bddFirstName = bddFirstName.charAt(0).toUpperCase() +
+    bddFirstName.slice(1, tiretFirstName + 1) +
+    bddFirstName.charAt(tiretFirstName + 1).toUpperCase() +
+    bddFirstName.slice(tiretFirstName + 2);
+  }else {
+    bddFirstName = bddFirstName.charAt(0).toUpperCase() + bddFirstName.slice(1);
+  }
+
+  if (tiretLastName > -1) {
+    bddLastName = bddLastName.charAt(0).toUpperCase() +
+    bddLastName.slice(1, tiretLastName + 1) +
+    bddLastName.charAt(tiretLastName + 1).toUpperCase() +
+    bddLastName.slice(tiretLastName + 2);
+  }else {
+    bddLastName = bddLastName.charAt(0).toUpperCase() + bddLastName.slice(1);
+  }
 
   // Hash password
   const hashPasswordFunction = async function () {
@@ -41,8 +62,8 @@ exports.createUser = (req, res) => {
       const newUser = new UserModel({
         email: req.body.email,
         password: passwordHashed,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
+        firstName: bddFirstName, // req.body.firstName,
+        lastName: bddLastName // req.body.lastName
       });
       // New user save in BDD
         try {
@@ -56,15 +77,12 @@ exports.createUser = (req, res) => {
   };
   hashPasswordFunction();
 };
+
+
 //
 //Middleware for login an user
 //
 exports.loginUser = (req, res) => {
-  /*
-  if (!ObjectId.isValid(req.body.email)) {
-    return res.status(404).json({ message: "Utilisateur inexistant !" });
-  }
-  */
   const findUser = async function () {
     try {
       const user = await UserModel.findOne({ email: req.body.email }).select(
@@ -72,7 +90,7 @@ exports.loginUser = (req, res) => {
       );
       // Checking role
       if (user.role === 'BLOCKED') {
-        return res.status(400).json({ message: 'Connexion refusée, Compte bloqué !'});
+        return res.status(402).json({ message: 'Connexion refusée, Compte bloqué !'});
       }
 
       // Password checking

@@ -50,6 +50,12 @@ body {
   font-size: $icon_medium;
   cursor: pointer;
   margin: $margin_small;
+  @include tablette {
+    font-size: $icon_small;
+  }
+  @include mobile {
+    font-size: $icon_small;
+  } 
 }
 
 .separation {
