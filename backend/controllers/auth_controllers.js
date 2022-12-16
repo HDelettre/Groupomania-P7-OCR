@@ -26,7 +26,6 @@ exports.createUser = (req, res) => {
   if (!checkFirstName || !checkLastName) {
     return res.status(400).json({ message: 'Revoir le format Prénom/Nom !'})
   }
-  console.log('check: ', checkFirstName, ' / ', checkLastName);
 
   // Formatage FirstName/LastName
   let bddFirstName = req.body.firstName.toLowerCase();

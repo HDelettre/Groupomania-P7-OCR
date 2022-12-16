@@ -6,6 +6,8 @@ const MIME_TYPES = {
   "image/png": "png"
 };
 
+const MAX_SIZE = 5000000;
+
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     if (file.fieldname === 'file') {
@@ -28,7 +30,16 @@ const storage = multer.diskStorage({
   }
 })
 
-module.exports = multer({ storage : storage }).fields([
+const fileFilter = function (req, file, callback) {
+  const fileExtension = MIME_TYPES[file.mimetype];
+  if (fileExtension === undefined) {
+    console.log('Extension non acceptée !')
+    return callback(null, false, new Error('Extension non acceptée !'));
+  }
+  callback(null, true);
+}
+
+module.exports = multer({ storage : storage, fileFilter : fileFilter, limits: {fileSize: MAX_SIZE} }).fields([
   {name:'file', maxCount: 1},
   {name: 'profile', maxCount: 1}
 ]);
